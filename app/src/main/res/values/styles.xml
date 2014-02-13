@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<resources>
+
+    <style name="tableRow_expandedTerm">
+        <item name="android:textColor">@color/dark_gray</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingRight">5dp</item>
+    </style>
+
+    <style name="layoutTextSize">
+        <item name="android:textViewStyle">@style/textSize_default</item>
+    </style>
+
+    <style name="textSize_default">
+        <item name="android:textSize">30sp</item>
+    </style>
+
+</resources>

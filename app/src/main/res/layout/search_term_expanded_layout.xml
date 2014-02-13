@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/search_term_expanded_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    style="@style/layoutTextSize"
+    android:padding="10dp">
+
+    <ImageButton
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:src="@drawable/ic_action_share"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" />
+
+    <LinearLayout
+        android:id="@+id/title_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/default_pink"
+            android:textStyle="bold"
+            android:text="centrale inertielle"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_weight="0.95"
+            android:layout_height="match_parent"
+            android:text=""
+            android:layout_gravity="center_vertical"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <TableLayout
+        android:id="@+id/search_expanded_terms_table"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/title_container"
+        android:stretchColumns="0"
+        android:shrinkColumns="0">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="@integer/term_display_table_label_weight"
+                android:minWidth="@dimen/term_display_table_minwidth"
+                android:layout_height="wrap_content"
+                style="@style/tableRow_expandedTerm"
+                android:text="Domaine" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="@integer/term_display_table_data_weight"
+                android:layout_height="wrap_content"
+                android:textColor="@color/dark_gray"
+                android:textAllCaps="true"
+                android:text="Électromécanique - Transports"
+                android:textStyle="italic"
+                android:textSize="@dimen/term_display_textsize" />
+
+        </TableRow>
+
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="@integer/term_display_table_label_weight"
+                android:layout_height="wrap_content"
+                style="@style/tableRow_expandedTerm"
+                android:minWidth="@dimen/term_display_table_minwidth"
+                android:text="Définition" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="@integer/term_display_table_data_weight"
+                android:layout_height="wrap_content"
+                android:text="Équipement embarqué sur un véhicule ou placé dans un objet, comprenant des capteurs d'accélération et de rotation et un traitement de données qui permet de déduire en temps réel, de données initiales connues, la position, l'orientation, ainsi que les vitesses linéaire et angulaire de ce véhicule ou de cet objet. Les capteurs présentant un certain degré d'imprécision, les valeurs fournies par la centrale inertielle dérivent progressivement et nécessitent de temps à autre un recalage pour certains usages. Les centrales inertielles peuvent notamment équiper certains appareils photographiques, les tourelles de char, etc."
+                android:textSize="@dimen/term_display_textsize" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="@integer/term_display_table_label_weight"
+                android:layout_height="wrap_content"
+                style="@style/tableRow_expandedTerm"
+                android:minWidth="@dimen/term_display_table_minwidth"
+                android:text="Synonyme" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="@integer/term_display_table_data_weight"
+                android:layout_height="wrap_content"
+                android:text="Centrale à inertie"
+                android:textSize="@dimen/term_display_textsize" />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="@integer/term_display_table_label_weight"
+                android:minWidth="@dimen/term_display_table_minwidth"
+                android:layout_height="wrap_content"
+                style="@style/tableRow_expandedTerm"
+                android:text="Équivalent étranger" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="@integer/term_display_table_data_weight"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/term_display_textsize"
+                android:text="inertial measurement unit (en), inertial platform (en), inertial unit (en)" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip">
+
+            <include
+                layout="@layout/term_notfound_buttons"
+                />
+        </TableRow>
+    </TableLayout>
+
+
+</RelativeLayout>
