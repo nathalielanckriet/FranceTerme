@@ -26,15 +26,13 @@ local.properties
 .gradle
 /*/local.properties
 /*/out
-/*/*/build
-/*/*/production
+/*/build
+/*/production
 *.iml
 *.iws
 *.ipr
 *~
 *.swp
 
-
-.idea/workspace.xml
 
 .idea/workspace.xml
