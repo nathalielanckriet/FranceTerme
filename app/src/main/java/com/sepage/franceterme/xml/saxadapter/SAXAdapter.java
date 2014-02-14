@@ -155,7 +155,7 @@ public class SAXAdapter extends DefaultHandler implements Values {
 
             if (tagName.equals(article_tag)) { //Article
                 log("\n--- NEW ARTICLE -----------------------------------------------------");
-                currentTerm = new Term().setFranceterme_id(attributes.getValue(id_attr)); // sets id and categorie attribute
+                currentTerm = new Term().setId(attributes.getValue(id_attr)); // sets id and categorie attribute
             }
             else if (tagName.equals(terme_tag)) {
                 String status = attributes.getValue(statut_attr);

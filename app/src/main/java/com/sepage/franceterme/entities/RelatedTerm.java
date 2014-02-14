@@ -5,12 +5,50 @@
 
 package com.sepage.franceterme.entities;
 
-public class RelatedTerm {
+import com.sepage.franceterme.db.util.SQLHelper;
+import com.sepage.franceterme.db.util.SQLUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class RelatedTerm implements SQLHelper {
 
     public String sqlid, title, franceterme_id,
             category,   // n.m., etc
             status,     // antonyme, synonyme
             langage;
+
+
+    @Override
+    public String getInsertQuery() {
+        List<String> columns = new ArrayList<String>(), values = new ArrayList<String>();
+        if (title != null ){
+            columns.add(TITLE_COLUMN);
+            values.add(title);
+        }
+        if (franceterme_id != null ){
+            columns.add(FRANCETERMEID_COLUMN);
+            values.add(franceterme_id);
+        }
+        if (category != null) {
+            columns.add(CATEGORY_COLUMN);
+            values.add(category);
+        }
+        if (status != null) {
+            columns.add(STATUS_COLUMN);
+            values.add(status);
+        }
+        if (langage != null) {
+            columns.add(LANGAGE_COLUMN);
+            values.add(langage);
+        }
+        return SQLUtil.getSQLInsertCommand(RELATEDTERM_TABLE, columns, values);
+    }
+
+    @Override
+    public String getUpdateQuery() {
+        return null;
+    }
 
 
     public RelatedTerm () {}
@@ -75,4 +113,6 @@ public class RelatedTerm {
         builder.append("title:" + title + ", cat:" + category + ", id:" + franceterme_id + ", status:" + status);
         return builder.toString();
     }
+
+
 }

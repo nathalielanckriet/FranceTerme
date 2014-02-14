@@ -9,7 +9,7 @@ import android.util.Log;
 
 import java.util.List;
 
-public class DBUtil {
+public class SQLUtil {
 
     public final static String ANALYZE_DATABASE_SCRIPT = "ANALYZE;",
 

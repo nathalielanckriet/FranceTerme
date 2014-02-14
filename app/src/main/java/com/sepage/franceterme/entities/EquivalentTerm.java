@@ -5,7 +5,14 @@
 
 package com.sepage.franceterme.entities;
 
-public class EquivalentTerm {
+import com.sepage.franceterme.db.util.SQLHelper;
+import com.sepage.franceterme.db.util.SQLUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class EquivalentTerm implements SQLHelper {
+
 
     private String title;
     private String language;
@@ -23,6 +30,37 @@ public class EquivalentTerm {
         this.origin = origin;
         this.category = category;
         this.note = note;
+    }
+
+    @Override
+    public String getInsertQuery() {
+        List<String> columns = new ArrayList<String>(), values = new ArrayList<String>();
+        if (title!=null) {
+            columns.add(TITLE_COLUMN);
+            values.add(title);
+        }
+        if (language!= null) {
+            columns.add(LANGUAGE_COLUMN);
+            values.add(language);
+        }
+        if (note!=null) {
+            columns.add(NOTE_COLUMN);
+            values.add(note);
+        }
+        if (category != null) {
+            columns.add(CATEGORY_COLUMN);
+            values.add(category);
+        }
+        if (origin!= null) {
+            columns.add(ORIGIN_COLUMN);
+            values.add(origin);
+        }
+        return SQLUtil.getSQLInsertCommand(EQUIVALENT_TABLE, columns, values);
+    }
+
+    @Override
+    public String getUpdateQuery() {
+        return null;
     }
 
     public String getLanguage () {
@@ -85,5 +123,6 @@ public class EquivalentTerm {
         builder.append("title:" + title + ", cat:" + category + ", lang:" + language + ", origin:" + origin+", note:"+note);
         return builder.toString();
     }
+
 
 }

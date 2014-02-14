@@ -6,7 +6,13 @@
 package com.sepage.franceterme.entities;
 
 
-public class VariantTerm {
+import com.sepage.franceterme.db.util.SQLHelper;
+import com.sepage.franceterme.db.util.SQLUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class VariantTerm implements SQLHelper{
 
 
     private String title;
@@ -23,6 +29,34 @@ public class VariantTerm {
         this.title = title;
         this.language = language;
         this.category = category;
+    }
+
+    @Override
+    public String getInsertQuery() {
+        List<String> columns = new ArrayList<String>(), values = new ArrayList<String>();
+        if (title!=null) {
+            columns.add(TITLE_COLUMN);
+            values.add(title);
+        }
+        if (category!=null) {
+            columns.add(CATEGORY_COLUMN);
+            values.add(category);
+        }
+        if (language !=null) {
+            columns.add(LANGUAGE_COLUMN);
+            values.add(language);
+        }
+        if (type !=null) {
+            columns.add(TYPE_COLUMN);
+            values.add(type);
+        }
+
+        return SQLUtil.getSQLInsertCommand(VARIANT_TABLE, columns, values);
+    }
+
+    @Override
+    public String getUpdateQuery() {
+        return null;
     }
 
     public String getLanguage() {
@@ -75,5 +109,6 @@ public class VariantTerm {
         builder.append("title:"+title+", cat:"+category+", lang:"+language+", type:"+type);
         return builder.toString();
     }
+
 
 }

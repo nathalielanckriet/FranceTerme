@@ -5,7 +5,7 @@ import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.sepage.franceterme.db.util.DBUtil;
+import com.sepage.franceterme.db.util.SQLUtil;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -23,12 +23,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        executeQueryOnTransactionMode(db, DBUtil.CREATE_DATABASE_SCRIPT+DBUtil.ANALYZE_DATABASE_SCRIPT);
+        executeQueryOnTransactionMode(db, SQLUtil.CREATE_DATABASE_SCRIPT+ SQLUtil.ANALYZE_DATABASE_SCRIPT);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(DBUtil.DROP_DATABASE_SCRIPT);
+        db.execSQL(SQLUtil.DROP_DATABASE_SCRIPT);
         onCreate(db);
     }
 

@@ -6,7 +6,13 @@
 package com.sepage.franceterme.entities;
 
 
-public class Subdomain {
+import com.sepage.franceterme.db.util.SQLHelper;
+import com.sepage.franceterme.db.util.SQLUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Subdomain implements SQLHelper {
 
     public String title;
     public String sqlid;
@@ -16,6 +22,21 @@ public class Subdomain {
     public Subdomain (String title, String sqlid) {
         this.title = title;
         this.sqlid=sqlid;
+    }
+
+    @Override
+    public String getInsertQuery() {
+        List<String> columns = new ArrayList<String>(), values = new ArrayList<String>();
+        if (title!=null) {
+            columns.add(TITLE_COLUMN);
+            values.add(title);
+        }
+        return SQLUtil.getSQLInsertCommand(SUBDOMAIN_TABLE, columns, values);
+    }
+
+    @Override
+    public String getUpdateQuery() {
+        return null;
     }
 
     public String getTitle () {
@@ -39,4 +60,6 @@ public class Subdomain {
     public String toString () {
        return title;
     }
+
+
 }
