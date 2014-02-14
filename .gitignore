@@ -33,3 +33,6 @@ local.properties
 *.ipr
 *~
 *.swp
+
+
+.idea/workspace.xml
