@@ -33,7 +33,9 @@ public class SQLUtil implements SQLHelper {
             "CREATE UNIQUE INDEX term_equivalent_id_index ON TermEquivalent (term_id, equivalent_id);" +
             "CREATE UNIQUE INDEX term_related_term_id_index ON TermRelatedTerm (term_id, relatedterm_id);" +
             "CREATE UNIQUE INDEX term_id_index ON Term (id ASC);CREATE UNIQUE INDEX term_id_title_index ON Term (title ASC, id);" +
-            "CREATE UNIQUE INDEX similar_terms_index ON SeeAlsoTerm (term_id, seealso_id);",
+            "CREATE UNIQUE INDEX similar_terms_index ON SeeAlsoTerm (term_id, seealso_id);" +
+            "CREATE TABLE android_metadata (locale TEXT DEFAULT 'en_US');" +
+            "INSERT INTO android_metadata VALUES ('en_US');",
 
     DROP_DATABASE_SCRIPT = "DROP TABLE IF EXISTS SeeAlsoTerm;" +
             "DROP TABLE IF EXISTS TermDomain;" +
@@ -55,7 +57,8 @@ public class SQLUtil implements SQLHelper {
             "DROP INDEX IF EXISTS term_related_term_id_index;" +
             "DROP INDEX IF EXISTS term_id_index;" +
             "DROP INDEX IF EXISTS term_id_title_index;" +
-            "DROP INDEX IF EXISTS similar_terms_index;";
+            "DROP INDEX IF EXISTS similar_terms_index;" +
+            "DROP TABLE IF EXISTS android_metadata;";
 
 
     public static String getSQLInsertCommand(String tableName, List<String> columns, List<String> values) {
