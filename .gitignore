@@ -36,3 +36,9 @@ local.properties
 
 
 .idea/workspace.xml
+
+.gradle/1.10/taskArtifacts/cache.properties.lock
+
+app/app.iml
+
+app/app.iml
