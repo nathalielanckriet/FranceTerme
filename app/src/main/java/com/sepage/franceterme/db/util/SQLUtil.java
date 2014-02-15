@@ -63,7 +63,9 @@ public class SQLUtil implements SQLHelper {
         builder.append("INSERT INTO ").append(tableName).append(" (");  // insert into table (
 
         for (int i=0; i<columns.size(); i++) {      // col1, col2, col3, ...)   all columns
-            builder.append(columns.get(i));
+
+            builder.append(columns.get(i));     // appends column name
+
             if(i<columns.size()-1) {    // to avoid adding a comma at the very end
                 builder.append(",");
             }
@@ -71,7 +73,9 @@ public class SQLUtil implements SQLHelper {
         builder.append(") VALUES (");
 
         for (int i=0; i<values.size(); i++) {      // val2, val2, val3, ...)   all values
-            builder.append("\'"+values.get(i)+"\'");
+
+            builder.append("\'"+encodeParameterForSQL(values.get(i))+"\'");    // encodes the parameter for SQL (escapes single quotes with two single quotes) and appends
+
             if(i<values.size()-1) {    // to avoid adding a comma at the very end
                 builder.append(",");
             }
@@ -120,5 +124,9 @@ public class SQLUtil implements SQLHelper {
     public String getUpdateQuery() {
         // useless method. dont implement
         return null;
+    }
+
+    public static String encodeParameterForSQL(String parameter) {
+        return parameter.replaceAll("\'","\'\'");
     }
 }

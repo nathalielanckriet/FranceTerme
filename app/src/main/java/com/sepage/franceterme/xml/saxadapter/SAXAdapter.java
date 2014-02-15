@@ -172,7 +172,7 @@ public class SAXAdapter extends DefaultHandler implements Values {
             else if (tagName.equals(termerech_tag)) {
                 if (expectingTermeRech) {
                     currentAntonym = new RelatedTerm().setCategory(attributes.getValue(categorie_attr))
-                            .setStatus(attributes.getValue(statut_attr)).setFranceterme_id(attributes.getValue(url_attr));
+                            .setStatus(attributes.getValue(statut_attr)).setFranceterme_id(attributes.getValue(url_attr).replaceAll(".*=", ""));
                 }
             }
             else if (tagName.equals(equivalent_tag)) {
