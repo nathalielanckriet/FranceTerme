@@ -7,10 +7,12 @@ package com.sepage.franceterme.db.util;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class SQLUtil {
+public class SQLUtil implements SQLHelper {
 
+    public final static int TERM_DOMAIN_TABLE_REF =1, TERM_SUBDOMAIN_TABLE_REF =2, TERM_EQUIVALENT_TABLE_REF =3, TERM_VARIANT_TABLE_REF =4, TERM_RELATEDTERM_TABLE_REF =5, SEEALSO_TERM_TABLE_REF =6;
     public final static String ANALYZE_DATABASE_SCRIPT = "ANALYZE;",
 
     CREATE_DATABASE_SCRIPT = "CREATE TABLE SeeAlsoTerm(id INTEGER PRIMARY KEY,term_id INTEGER NOT NULL,seealso_id INTEGER NOT NULL, FOREIGN KEY(seealso_id) REFERENCES Term(id), FOREIGN KEY(term_id) REFERENCES Term(id)) ;" +
@@ -69,7 +71,7 @@ public class SQLUtil {
         builder.append(") VALUES (");
 
         for (int i=0; i<values.size(); i++) {      // val2, val2, val3, ...)   all values
-            builder.append(values.get(i));
+            builder.append("\'"+values.get(i)+"\'");
             if(i<values.size()-1) {    // to avoid adding a comma at the very end
                 builder.append(",");
             }
@@ -81,7 +83,42 @@ public class SQLUtil {
     }
 
 
+    public static String generateForeignKeySQLTable(int TABLE_REF, int termID) {
+
+        // INSERT INTO TermDomain (term_id, domain_id) VALUES ('1', (SELECT last_insert_rowid()))
+
+        switch (TABLE_REF) {
+
+            case TERM_DOMAIN_TABLE_REF: {
+                return ("INSERT INTO "+TERM_DOMAIN_TABLE+" ("+TERMID_COLUMN+","+DOMAINID_COLUMN+") VALUES (\'"+termID+"\',"+LAST_ROWID+");");
+            }
+            case TERM_SUBDOMAIN_TABLE_REF: {
+                return ("INSERT INTO "+TERM_SUBDOMAIN_TABLE+" ("+TERMID_COLUMN+","+SUBDOMAINID_COLUMN+") VALUES (\'"+termID+"\',"+LAST_ROWID+");");
+            }
+            case TERM_EQUIVALENT_TABLE_REF: {
+                return ("INSERT INTO "+TERM_EQUIVALENT_TABLE+" ("+TERMID_COLUMN+","+EQUIVALENTID_COLUMN+") VALUES (\'"+termID+"\',"+LAST_ROWID+");");
+            }
+            case TERM_VARIANT_TABLE_REF: {
+                return ("INSERT INTO "+TERM_VARIANT_TABLE+" ("+TERMID_COLUMN+","+VARIANTID_COLUMN+") VALUES (\'"+termID+"\',"+LAST_ROWID+");");
+            }
+            case TERM_RELATEDTERM_TABLE_REF: {
+                return ("INSERT INTO "+TERM_RELATEDTERM_TABLE+" ("+TERMID_COLUMN+","+RELATEDID_COLUMN+") VALUES (\'"+termID+"\',"+LAST_ROWID+");");
+            }
+        }
+
+        return "";
+    }
 
 
+    @Override
+    public String getInsertQuery() {
+        // useless method. dont implement
+        return null;
+    }
 
+    @Override
+    public String getUpdateQuery() {
+        // useless method. dont implement
+        return null;
+    }
 }

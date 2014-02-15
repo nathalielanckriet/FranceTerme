@@ -1,4 +1,4 @@
-package com.sepage.franceterme.activities;
+package com.sepage.franceterme.view.activities;
 
 import java.util.Locale;
 
@@ -10,14 +10,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
 import com.sepage.franceterme.R;
-import com.sepage.franceterme.fragments.DiscoverTermsFragment;
-import com.sepage.franceterme.fragments.InfoFragment;
-import com.sepage.franceterme.fragments.ProposeTermFragment;
+import com.sepage.franceterme.view.fragments.DiscoverTermsFragment;
+import com.sepage.franceterme.view.fragments.InfoFragment;
+import com.sepage.franceterme.view.fragments.ProposeTermFragment;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
 

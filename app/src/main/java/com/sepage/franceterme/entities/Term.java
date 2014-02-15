@@ -56,6 +56,8 @@ public class Term implements SQLHelper {
 
     @Override
     public String getInsertQuery() {
+
+        // For the Term table itself
         List<String> columns = new ArrayList<String>(), values = new ArrayList<String>();
         if (title != null) {
             columns.add(TITLE_COLUMN);
@@ -81,7 +83,66 @@ public class Term implements SQLHelper {
             columns.add(LANGAGE_COLUMN);
             values.add(langage);
         }
-        return SQLUtil.getSQLInsertCommand(TERM_TABLE, columns, values);
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(SQLUtil.getSQLInsertCommand(TERM_TABLE, columns, values));
+
+        columns.clear();
+        values.clear();
+
+
+        // For all tables related to Term (which is all the other tables really)
+
+        /* IMPORTANT
+         *  It's absolutely crucial that you insert the ForeignKey reference right after inserting an entity. Say, if you insert a Domain, then you must immediately insert TermDomain.
+         *  This is because the SQL command relies on the get_last_rowid() method in SQL which relies on the last inserted row in a Transaction (not a table). Otherwise the ForeignKey constraint fails.
+         */
+
+        // for domains and termDomain table
+        for (Domain domain : domainList) {
+            builder.append(domain.getInsertQuery());
+            builder.append(SQLUtil.generateForeignKeySQLTable(SQLUtil.TERM_DOMAIN_TABLE_REF, Integer.parseInt(id)));
+        }
+
+        // for subdomains
+        for (Subdomain subdomain : subdomainList) {
+            builder.append(subdomain.getInsertQuery());
+            builder.append(SQLUtil.generateForeignKeySQLTable(SQLUtil.TERM_SUBDOMAIN_TABLE_REF, Integer.parseInt(id)));
+        }
+
+        // for Equivalents
+        for (EquivalentTerm equivalentTerm : equivalentTermList) {
+            builder.append(equivalentTerm.getInsertQuery());
+            builder.append(SQLUtil.generateForeignKeySQLTable(SQLUtil.TERM_EQUIVALENT_TABLE_REF, Integer.parseInt(id)));
+        }
+
+        // for Variants
+        for (VariantTerm variantTerm : variantTermList) {
+            builder.append(variantTerm.getInsertQuery());
+            builder.append(SQLUtil.generateForeignKeySQLTable(SQLUtil.TERM_VARIANT_TABLE_REF, Integer.parseInt(id)));
+        }
+
+        // for related terms
+        for (RelatedTerm relatedTerm : relatedTermList) {
+            builder.append(relatedTerm.getInsertQuery());
+            builder.append(SQLUtil.generateForeignKeySQLTable(SQLUtil.TERM_RELATEDTERM_TABLE_REF, Integer.parseInt(id)));
+        }
+
+        // See also
+        for (String seeAlso : seeAlsoTermList) {
+            columns.add(TERMID_COLUMN);
+            values.add(id);
+
+            columns.add(SEEALSOID_COLUMN);
+            values.add(seeAlso);
+
+            builder.append(SQLUtil.getSQLInsertCommand(SEEALSO_TABLE, columns, values));
+            columns.clear();
+            values.clear();
+        }
+
+
+        return builder.toString();
     }
 
     @Override

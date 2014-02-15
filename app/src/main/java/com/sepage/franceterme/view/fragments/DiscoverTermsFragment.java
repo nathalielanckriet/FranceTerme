@@ -1,4 +1,4 @@
-package com.sepage.franceterme.fragments;
+package com.sepage.franceterme.view.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,8 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.sepage.franceterme.R;
-import com.sepage.franceterme.activities.MainActivity;
-import com.sepage.franceterme.util.ViewUtil;
+import com.sepage.franceterme.view.activities.MainActivity;
+import com.sepage.franceterme.view.util.ViewUtil;
 
 
 public class DiscoverTermsFragment extends Fragment implements View.OnClickListener {

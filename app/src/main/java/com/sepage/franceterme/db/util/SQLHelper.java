@@ -16,7 +16,7 @@ public interface SQLHelper {
             TITLE_COLUMN="title", ID_COLUMN="id", FRANCETERMEID_COLUMN="franceterme_id", LANGUAGE_COLUMN="language" , TYPE_COLUMN="type",
             CATEGORY_COLUMN="category" , LANGAGE_COLUMN="langage", STATUS_COLUMN="status", TERMID_COLUMN="term_id", DOMAINID_COLUMN="domain_id",
             SUBDOMAINID_COLUMN="subdomain_id", VARIANTID_COLUMN="variant_id", EQUIVALENTID_COLUMN="equivalent_id", RELATEDID_COLUMN="relatedterm_id" , NOTE_COLUMN="note",
-            NOTES_COLUMN="notes" , DEFINITION_COLUMN="definition", ORIGIN_COLUMN="origin" , SEEALSOID_COLUMN="seealso_id" ;
+            NOTES_COLUMN="notes" , DEFINITION_COLUMN="definition", ORIGIN_COLUMN="origin" , SEEALSOID_COLUMN="seealso_id", LAST_ROWID="(SELECT last_insert_rowid())" ;
 
     public String getInsertQuery();
 

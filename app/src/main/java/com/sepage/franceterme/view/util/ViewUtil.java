@@ -1,4 +1,4 @@
-package com.sepage.franceterme.util;
+package com.sepage.franceterme.view.util;
 
 /**
  * Created by Balrog on 1/14/14.

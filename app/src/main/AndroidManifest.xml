@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Franceterme" >
 
         <activity
-            android:name=".activities.SplashScreen"
+            android:name=".view.activities.SplashScreen"
             android:label="@string/app_name"
             android:noHistory="true"
             android:screenOrientation="portrait"
@@ -30,7 +30,7 @@
 
 
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".view.activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.Franceterme">
         </activity>

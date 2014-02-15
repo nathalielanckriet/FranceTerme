@@ -1,4 +1,4 @@
-package com.sepage.franceterme.fragments;
+package com.sepage.franceterme.view.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

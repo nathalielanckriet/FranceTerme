@@ -1,4 +1,4 @@
-package com.sepage.franceterme.activities;
+package com.sepage.franceterme.view.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
