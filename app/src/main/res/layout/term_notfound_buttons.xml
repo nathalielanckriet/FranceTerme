@@ -28,6 +28,8 @@
         android:textColor="@color/default_pink"
         android:text="@string/suggest_a_term"
         android:textSize="20sp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:gravity="center" />
@@ -39,6 +41,8 @@
         android:textColor="@color/default_pink"
         android:text="@string/update_database"
         android:textSize="20sp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:gravity="center" />

@@ -11,9 +11,9 @@
         android:id="@+id/propose_term_title"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:text="PROPOSER UN TERM"
+        android:text="Vous avez besoin d’un terme technique? \nProposer un terme"
         android:textSize="25sp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
         android:gravity="center" />
 
@@ -26,8 +26,10 @@
         android:layout_marginRight="@dimen/suggestterm_textfieldholder_margin_right">
 
         <LinearLayout
-            android:focusable="true" android:focusableInTouchMode="true"
-            android:layout_width="0px" android:layout_height="0px"/>
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_width="0px"
+            android:layout_height="0px" />
 
         <EditText
             android:id="@+id/suggest_terme_textfield_terme"
@@ -35,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/suggestterm_textfield_margin_top"
             android:layout_marginBottom="@dimen/suggestterm_textfield_margin_bottom"
-            android:hint="Terme"/>
+            android:hint="Terme" />
 
         <EditText
             android:id="@+id/suggest_terme_textfield_commentaire"
@@ -43,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/suggestterm_textfield_margin_top"
             android:layout_marginBottom="@dimen/suggestterm_textfield_margin_bottom"
-            android:hint="Commentaire"/>
+            android:hint="Commentaire" />
 
         <EditText
             android:id="@+id/suggest_terme_textfield_domaine"
@@ -51,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/suggestterm_textfield_margin_top"
             android:layout_marginBottom="@dimen/suggestterm_textfield_margin_bottom"
-            android:hint="Domaine"/>
+            android:hint="Domaine" />
 
         <EditText
             android:id="@+id/suggest_terme_textfield_courriel"
@@ -59,8 +61,8 @@
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/suggestterm_textfield_margin_top"
             android:layout_marginBottom="@dimen/suggestterm_textfield_margin_bottom"
-            android:hint="Courriel"/>
-        
+            android:hint="Courriel" />
+
         <Button
             android:layout_height="@dimen/suggestterm_submitbutton_height"
             android:layout_width="@dimen/suggestterm_submitbutton_width"
@@ -70,7 +72,7 @@
             android:background="@drawable/round_button_layout_pink"
             android:textColor="@android:color/white"
             android:textSize="@dimen/suggestterm_submitbutton_fontsize"
-            android:id="@+id/proposeterm_submit_button"/>
+            android:id="@+id/proposeterm_submit_button" />
 
     </LinearLayout>
 

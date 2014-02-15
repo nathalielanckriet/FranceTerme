@@ -7,9 +7,20 @@
     <string name="home_tab2_title">Contribuez</string>
     <string name="home_tab3_title">Info</string>
     <string name="action_settings">Settings</string>
-    <string name="thankyou_submitalert_text">"Merci d'avoir proposé un terme"</string>
-    <string name="splash_text">FranceTerme est une application qui permet de </string>
-    <string name="suggest_a_term">SUGGERER UN TERME</string>
-    <string name="update_database">METTRE A JOUR LA BASE</string>
+    <string name="thankyou_submitalert_text">"Merci de votre participation à l’enrichissement de la langue française."</string>
+    <string name="splash_text">Bienvenue sur l’application FranceTerme. Retrouvez les termes scientifiques et techniques publiés au Journal officiel.</string>
+    <string name="suggest_a_term">PROPOSER UN TERME</string>
+    <string name="update_database">Mettre à jour l’application (FranceTerme)</string>
     <string name="didnt_find_string">"vous n'avez pas trouvé?"</string>
+    <string name="info_page_text">
+         <![CDATA[
+             Cette application donne accès aux termes recommandés par la Commission générale de terminologie et de néologie, publiés au Journal officiel de la République française.<br />
+Cet ensemble de termes de différents domaines scientifiques et techniques est regroupé dans la base <a href="http://www.culture.fr/Ressources/FranceTerme" target="_blank">FranceTerme</a>. Cette base <span style="font-weight:bold;">ne constitue en aucun cas un dictionnaire de langue générale.</span><br />
+Certains de ces termes sont cependant d’usage courant.<br />
+L’emploi des termes recommandés s’impose à l’administration à la place de termes étrangers, mais chacun peut les adopter.<br />
+Pour participer à l'enrichissement de la langue française, envoyez-nous vos propositions de termes techniques.<br />
+Pour être tenu informé des derniers termes publiés dans les domaines qui vous intéressent, abonnez-vous (rubrique « <a href="http://www.culture.fr/franceterme/abonnezvous" target="_blank">Abonnez-vous</a> » sur <a href="http://www.culture.fr/Ressources/FranceTerme" target="_blank">FranceTerme</a>).
+
+             ]]>
+    </string>
 </resources>
