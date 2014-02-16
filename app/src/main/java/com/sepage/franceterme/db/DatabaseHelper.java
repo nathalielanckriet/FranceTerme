@@ -185,4 +185,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor findTermByID(String id) {
         return database.rawQuery(SQLUtil.getSELECTQueryForTermById(), new String[] {id});
     }
+
+    public Cursor executeRawQuery(String query, String[] args) {
+        return database.rawQuery(query,args);
+    }
 }
