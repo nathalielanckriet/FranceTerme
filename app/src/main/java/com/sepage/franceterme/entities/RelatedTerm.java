@@ -11,9 +11,9 @@ import com.sepage.franceterme.db.util.SQLUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RelatedTerm implements SQLHelper {
+public class RelatedTerm implements SQLHelper<RelatedTerm> {
 
-    public String sqlid, title, franceterme_id,
+    private String sqlid, title, franceterme_id,
             category,   // n.m., etc
             status,     // antonyme, synonyme
             langage;
@@ -48,6 +48,19 @@ public class RelatedTerm implements SQLHelper {
     @Override
     public String getUpdateQuery() {
         return null;
+    }
+
+    @Override
+    public boolean isNull() {
+        if (title==null || title.isEmpty()){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean equals(RelatedTerm object) {
+        return title.equals(object.getTitle());
     }
 
 

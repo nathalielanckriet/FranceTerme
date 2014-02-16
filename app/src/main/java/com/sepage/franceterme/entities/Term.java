@@ -13,7 +13,7 @@ import com.sepage.franceterme.xml.util.Util;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Term implements SQLHelper {
+public class Term implements SQLHelper<Term> {
 
     private String title;
     private String id;
@@ -148,6 +148,19 @@ public class Term implements SQLHelper {
     @Override
     public String getUpdateQuery() {
         return null;
+    }
+
+    @Override
+    public boolean isNull() {
+        if (title==null || title.isEmpty()){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean equals(Term object) {
+        return title.equals(object.getTitle());
     }
 
 

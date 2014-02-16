@@ -35,21 +35,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.d("Database Intialization", "trying to use local file");
-        boolean successInUsingLocalDatabase = migrateDatabaseFromLocalFile(); // try to use local database
-        if (!successInUsingLocalDatabase) {
+        boolean successInUsingLocalDatabase = migrateDatabaseFromLocalFile(); // try to use local database file
+        if (!successInUsingLocalDatabase) {             // using local database file failed, will use insert scripts now
             Log.d("Database Intialization", "COULD NOT USE LOCAL DATABASE FILE, NOW RUNNING BATCH INSERT SCRIPTS IN SEPARATE THREAD");
             executeLargeQueryOnTransactionMode(db, SQLUtil.CREATE_ALLTABLES_SCRIPT);
             initializeSQLTablesAndInsertAllOnSeparateThread(db, SQL_INSERT_SCRIPTS_LOCAL_PATH);
             db.execSQL(SQLUtil.ANALYZE_DATABASE_SCRIPT);
-
-            try {
-                openDatabase();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                Log.d("Database", "FATAL ERROR: Could not open database.");
-                database = db;
-            }
         }
+        database = db;
     }
 
     @Override

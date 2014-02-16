@@ -12,11 +12,11 @@ import com.sepage.franceterme.db.util.SQLUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Domain implements SQLHelper {
+public class Domain implements SQLHelper<Domain> {
 
 
-    public String title;
-    public String sqlid;
+    private String title;
+    private String sqlid;
 
     public Domain() { }
 
@@ -39,6 +39,19 @@ public class Domain implements SQLHelper {
     @Override
     public String getUpdateQuery() {
         return null;
+    }
+
+    @Override
+    public boolean isNull() {
+        if (title==null || title.isEmpty()){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean equals(Domain object) {
+        return title.equals(object.getTitle());
     }
 
     public String getTitle () {

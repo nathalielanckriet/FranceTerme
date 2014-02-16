@@ -13,30 +13,35 @@ import java.util.List;
 public class SQLUtil implements SQLHelper {
 
     public final static int TERM_DOMAIN_TABLE_REF = 1, TERM_SUBDOMAIN_TABLE_REF = 2, TERM_EQUIVALENT_TABLE_REF = 3, TERM_VARIANT_TABLE_REF = 4, TERM_RELATEDTERM_TABLE_REF = 5, SEEALSO_TERM_TABLE_REF = 6;
+    public final static String TERMID_SELECT_COLUMN = "TermID", TermTitle_SELECT_COLUMN = "TermTitle", TermDefinition_SELECT_COLUMN = "TermDefinition", TermNotes_SELECT_COLUMN = "TermNotes",
+            DomainTitle_SELECT_COLUMN = "DomainTitle", SubdomainTitle_SELECT_COLUMN = "SubdomainTitle", EquivalentTitle_SELECT_COLUMN = "EquivalentTitle", EquivalentLanguage_SELECT_COLUMN = "EquivalentLanguage",
+            EquivalentCategory_SELECT_COLUMN = "EquivalentCategory", EquivalentNote_SELECT_COLUMN = "EquivalentNote", RelatedTermTitle_SELECT_COLUMN = "RelatedTermTitle",
+            RelatedTermStatus_SELECT_COLUMN = "RelatedTermStatus",RelatedTermCategory_SELECT_COLUMN = "RelatedTermCategory", RelatedTermID_SELECT_COLUMN = "RelatedTermID",
+            RelatedTermLangage_SELECT_COLUMN = "RelatedTermLangage,", SeeAlsoTermID_SELECT_COLUMN = "SeeAlsoTermID", VariantTitle_SELECT_COLUMN = "VariantTitle",VariantCategory_SELECT_COLUMN = "VariantCategory",
+            VariantLanguage_SELECT_COLUMN = "VariantLanguage", VariantType_SELECT_COLUMN = "VariantType";
     public final static String ANALYZE_DATABASE_SCRIPT = "ANALYZE;",
-
-    CREATE_ALLTABLES_SCRIPT =
-            "CREATE TABLE SeeAlsoTerm(id INTEGER PRIMARY KEY,term_id INTEGER NOT NULL,seealso_id INTEGER NOT NULL, FOREIGN KEY(seealso_id) REFERENCES Term(id), FOREIGN KEY(term_id) REFERENCES Term(id)) ;" +
-                    "CREATE TABLE TermDomain(id INTEGER PRIMARY KEY,term_id INTEGER NOT NULL,domain_id INTEGER NOT NULL, FOREIGN KEY(domain_id) REFERENCES Domain (id), FOREIGN KEY(term_id) REFERENCES Term(id));" +
-                    "CREATE TABLE TermSubdomain (id INTEGER PRIMARY KEY,term_id INTEGER NOT NULL,subdomain_id INTEGER NOT NULL, FOREIGN KEY(term_id) REFERENCES Term (id), FOREIGN KEY (subdomain_id) REFERENCES Subdomain(id));" +
-                    "CREATE TABLE TermVariant(id INTEGER PRIMARY KEY,term_id INTEGER NOT NULL,variant_id INTEGER NOT NULL, FOREIGN KEY(term_id) REFERENCES Term (id), FOREIGN KEY(variant_id) REFERENCES Variant(id));" +
-                    "CREATE TABLE TermEquivalent(id INTEGER PRIMARY KEY,term_id INTEGER NOT NULL,equivalent_id INTEGER NOT NULL, FOREIGN KEY(term_id) REFERENCES Term (id), FOREIGN KEY(equivalent_id ) REFERENCES Equivalent (id));" +
-                    "CREATE TABLE TermRelatedTerm(id INTEGER PRIMARY KEY,term_id INTEGER NOT NULL,relatedterm_id INTEGER NOT NULL, FOREIGN KEY(term_id) REFERENCES Term (id), FOREIGN KEY(relatedterm_id) REFERENCES RelatedTerm(id));" +
-                    "CREATE TABLE Term (id INTEGER NOT NULL, title TEXT NOT NULL, definition TEXT NOT NULL, notes TEXT, category TEXT, langage TEXT, PRIMARY KEY (id));" +
-                    "CREATE TABLE Domain (id INTEGER PRIMARY KEY, title TEXT NOT NULL);" +
-                    "CREATE TABLE Subdomain (id INTEGER PRIMARY KEY, title TEXT NOT NULL);CREATE TABLE Variant (id INTEGER PRIMARY KEY, title TEXT NOT NULL, language TEXT, category TEXT, type text NOT NULL);" +
-                    "CREATE TABLE Equivalent (id INTEGER PRIMARY KEY, title TEXT NOT NULL, language TEXT, note TEXT, category TEXT, origin TEXT);" +
-                    "CREATE TABLE RelatedTerm(id INTEGER PRIMARY KEY ,title TEXT NOT NULL, status TEXT, category TEXT, franceterme_id TEXT);" +
-                    "CREATE UNIQUE INDEX seealsoterm_index ON SeeAlsoTerm(term_id, seealso_id);" +
-                    "CREATE UNIQUE INDEX term_domain_id_index ON TermDomain (term_id, domain_id);" +
-                    "CREATE UNIQUE INDEX term_subdomain_id_index ON TermSubdomain (term_id,subdomain_id);" +
-                    "CREATE UNIQUE INDEX term_variant_id_index ON TermVariant (term_id, variant_id);" +
-                    "CREATE UNIQUE INDEX term_equivalent_id_index ON TermEquivalent (term_id, equivalent_id);" +
-                    "CREATE UNIQUE INDEX term_related_term_id_index ON TermRelatedTerm (term_id, relatedterm_id);" +
-                    "CREATE UNIQUE INDEX term_id_index ON Term (id ASC);CREATE UNIQUE INDEX term_id_title_index ON Term (title ASC, id);" +
-                    "CREATE UNIQUE INDEX similar_terms_index ON SeeAlsoTerm (term_id, seealso_id);" +
-                    "CREATE TABLE android_metadata (locale TEXT DEFAULT 'en_US');" +
-                    "INSERT INTO android_metadata VALUES ('en_US');",
+            CREATE_ALLTABLES_SCRIPT =
+                    "CREATE TABLE SeeAlsoTerm(id INTEGER PRIMARY KEY,term_id INTEGER NOT NULL,seealso_id INTEGER NOT NULL, FOREIGN KEY(seealso_id) REFERENCES Term(id), FOREIGN KEY(term_id) REFERENCES Term(id)) ;" +
+                            "CREATE TABLE TermDomain(id INTEGER PRIMARY KEY,term_id INTEGER NOT NULL,domain_id INTEGER NOT NULL, FOREIGN KEY(domain_id) REFERENCES Domain (id), FOREIGN KEY(term_id) REFERENCES Term(id));" +
+                            "CREATE TABLE TermSubdomain (id INTEGER PRIMARY KEY,term_id INTEGER NOT NULL,subdomain_id INTEGER NOT NULL, FOREIGN KEY(term_id) REFERENCES Term (id), FOREIGN KEY (subdomain_id) REFERENCES Subdomain(id));" +
+                            "CREATE TABLE TermVariant(id INTEGER PRIMARY KEY,term_id INTEGER NOT NULL,variant_id INTEGER NOT NULL, FOREIGN KEY(term_id) REFERENCES Term (id), FOREIGN KEY(variant_id) REFERENCES Variant(id));" +
+                            "CREATE TABLE TermEquivalent(id INTEGER PRIMARY KEY,term_id INTEGER NOT NULL,equivalent_id INTEGER NOT NULL, FOREIGN KEY(term_id) REFERENCES Term (id), FOREIGN KEY(equivalent_id ) REFERENCES Equivalent (id));" +
+                            "CREATE TABLE TermRelatedTerm(id INTEGER PRIMARY KEY,term_id INTEGER NOT NULL,relatedterm_id INTEGER NOT NULL, FOREIGN KEY(term_id) REFERENCES Term (id), FOREIGN KEY(relatedterm_id) REFERENCES RelatedTerm(id));" +
+                            "CREATE TABLE Term (id INTEGER NOT NULL, title TEXT NOT NULL, definition TEXT NOT NULL, notes TEXT, category TEXT, langage TEXT, PRIMARY KEY (id));" +
+                            "CREATE TABLE Domain (id INTEGER PRIMARY KEY, title TEXT NOT NULL);" +
+                            "CREATE TABLE Subdomain (id INTEGER PRIMARY KEY, title TEXT NOT NULL);CREATE TABLE Variant (id INTEGER PRIMARY KEY, title TEXT NOT NULL, language TEXT, category TEXT, type text NOT NULL);" +
+                            "CREATE TABLE Equivalent (id INTEGER PRIMARY KEY, title TEXT NOT NULL, language TEXT, note TEXT, category TEXT, origin TEXT);" +
+                            "CREATE TABLE RelatedTerm(id INTEGER PRIMARY KEY ,title TEXT NOT NULL, status TEXT, category TEXT, franceterme_id TEXT);" +
+                            "CREATE UNIQUE INDEX seealsoterm_index ON SeeAlsoTerm(term_id, seealso_id);" +
+                            "CREATE UNIQUE INDEX term_domain_id_index ON TermDomain (term_id, domain_id);" +
+                            "CREATE UNIQUE INDEX term_subdomain_id_index ON TermSubdomain (term_id,subdomain_id);" +
+                            "CREATE UNIQUE INDEX term_variant_id_index ON TermVariant (term_id, variant_id);" +
+                            "CREATE UNIQUE INDEX term_equivalent_id_index ON TermEquivalent (term_id, equivalent_id);" +
+                            "CREATE UNIQUE INDEX term_related_term_id_index ON TermRelatedTerm (term_id, relatedterm_id);" +
+                            "CREATE UNIQUE INDEX term_id_index ON Term (id ASC);CREATE UNIQUE INDEX term_id_title_index ON Term (title ASC, id);" +
+                            "CREATE UNIQUE INDEX similar_terms_index ON SeeAlsoTerm (term_id, seealso_id);" +
+                            "CREATE TABLE android_metadata (locale TEXT DEFAULT 'en_US');" +
+                            "INSERT INTO android_metadata VALUES ('en_US');",
 
     DROP_ALLTABLES_SCRIPT = "DROP TABLE IF EXISTS SeeAlsoTerm;" +
             "DROP TABLE IF EXISTS TermDomain;" +
@@ -122,7 +127,7 @@ public class SQLUtil implements SQLHelper {
                 "T.notes AS TermNotes, D.title AS DomainTitle, S.title AS SubdomainTitle, E.title AS EquivalentTitle, " +
                 "E.language AS EquivalentLanguage, E.category AS EquivalentCategory, E.note AS EquivalentNote, " +
                 "R.title AS RelatedTermTitle, R.status AS RelatedTermStatus, R.category AS RelatedTermCategory, " +
-                "R.franceterme_id AS RelatedTermID, R.langage AS RelatedTermLanguage,Tsee.seealso_id AS SeeAlsoTermID, " +
+                "R.franceterme_id AS RelatedTermID, R.langage AS RelatedTermLangage,,Tsee.seealso_id AS SeeAlsoTermID, " +
                 "V.title AS VariantTitle, V.category AS VariantCategory, V.language AS VariantLanguage, V.type AS VariantType " +
                 "FROM Term AS T LEFT OUTER JOIN TermDomain AS TD ON T.id = TD.term_id " +
                 "LEFT OUTER JOIN TermRelatedTerm AS TR ON T.id = TR.term_id " +
@@ -148,6 +153,12 @@ public class SQLUtil implements SQLHelper {
     public String getUpdateQuery() {
         // useless method. dont implement
         return null;
+    }
+
+    @Override
+    public boolean isNull() {
+        // useless method. dont implement
+        return false;
     }
 
     public static String encodeParameterForSQL(String parameter) {

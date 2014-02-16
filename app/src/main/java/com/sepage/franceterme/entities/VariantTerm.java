@@ -12,7 +12,7 @@ import com.sepage.franceterme.db.util.SQLUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VariantTerm implements SQLHelper{
+public class VariantTerm implements SQLHelper<VariantTerm> {
 
 
     private String title;
@@ -34,19 +34,19 @@ public class VariantTerm implements SQLHelper{
     @Override
     public String getInsertQuery() {
         List<String> columns = new ArrayList<String>(), values = new ArrayList<String>();
-        if (title!=null) {
+        if (title != null) {
             columns.add(TITLE_COLUMN);
             values.add(title);
         }
-        if (category!=null) {
+        if (category != null) {
             columns.add(CATEGORY_COLUMN);
             values.add(category);
         }
-        if (language !=null) {
+        if (language != null) {
             columns.add(LANGUAGE_COLUMN);
             values.add(language);
         }
-        if (type !=null) {
+        if (type != null) {
             columns.add(TYPE_COLUMN);
             values.add(type);
         }
@@ -57,6 +57,14 @@ public class VariantTerm implements SQLHelper{
     @Override
     public String getUpdateQuery() {
         return null;
+    }
+
+    @Override
+    public boolean isNull() {
+        if (title == null || title.isEmpty()) {
+            return true;
+        }
+        return false;
     }
 
     public String getLanguage() {
@@ -86,11 +94,11 @@ public class VariantTerm implements SQLHelper{
         return this;
     }
 
-    public String getTitle () {
+    public String getTitle() {
         return title;
     }
 
-    public VariantTerm setTitle (String title) {
+    public VariantTerm setTitle(String title) {
         this.title = title;
         return this;
     }
@@ -106,8 +114,13 @@ public class VariantTerm implements SQLHelper{
 
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("title:"+title+", cat:"+category+", lang:"+language+", type:"+type);
+        builder.append("title:" + title + ", cat:" + category + ", lang:" + language + ", type:" + type);
         return builder.toString();
+    }
+
+
+    public boolean equals(VariantTerm object) {
+        return title.equals(object.getTitle());
     }
 
 

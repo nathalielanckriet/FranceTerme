@@ -42,3 +42,5 @@ local.properties
 app/app.iml
 
 app/app.iml
+
+*.bin

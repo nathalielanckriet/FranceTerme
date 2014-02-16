@@ -8,7 +8,7 @@ package com.sepage.franceterme.db.util;
 
 import java.util.List;
 
-public interface SQLHelper {
+public interface SQLHelper<T> {
 
     public final static String DOMAIN_TABLE="Domain", TERM_TABLE="Term", SUBDOMAIN_TABLE="Subdomain", VARIANT_TABLE="Variant", RELATEDTERM_TABLE="RelatedTerm",
             EQUIVALENT_TABLE="Equivalent", TERM_DOMAIN_TABLE="TermDomain", TERM_SUBDOMAIN_TABLE="TermSubdomain", TERM_VARIANT_TABLE="TermVariant",
@@ -21,6 +21,10 @@ public interface SQLHelper {
     public String getInsertQuery();
 
     public String getUpdateQuery();
+
+    public boolean isNull() ;
+
+    public boolean equals(T object) ;
 
 
 }
