@@ -12,7 +12,7 @@ import com.sepage.franceterme.data.db.util.SQLUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VariantTerm implements SQLHelper<VariantTerm> {
+public class VariantTerm implements SQLHelper {
 
 
     private String title;

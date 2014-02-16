@@ -6,7 +6,7 @@
 package com.sepage.franceterme.data.db.util;
 
 
-public interface SQLHelper<T> {
+public interface SQLHelper {
 
     public final static String DOMAIN_TABLE="Domain", TERM_TABLE="Term", SUBDOMAIN_TABLE="Subdomain", VARIANT_TABLE="Variant", RELATEDTERM_TABLE="RelatedTerm",
             EQUIVALENT_TABLE="Equivalent", TERM_DOMAIN_TABLE="TermDomain", TERM_SUBDOMAIN_TABLE="TermSubdomain", TERM_VARIANT_TABLE="TermVariant",
@@ -21,8 +21,6 @@ public interface SQLHelper<T> {
     public String getUpdateQuery();
 
     public boolean isNull() ;
-
-    public boolean equals(T object) ;
 
 
 }

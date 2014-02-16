@@ -11,7 +11,7 @@ import com.sepage.franceterme.data.db.util.SQLUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RelatedTerm implements SQLHelper<RelatedTerm> {
+public class RelatedTerm implements SQLHelper {
 
     private String sqlid, title, franceterme_id,
             category,   // n.m., etc
@@ -58,7 +58,7 @@ public class RelatedTerm implements SQLHelper<RelatedTerm> {
         return false;
     }
 
-    @Override
+
     public boolean equals(RelatedTerm object) {
         return title.equals(object.getTitle());
     }

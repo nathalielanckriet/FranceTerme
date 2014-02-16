@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
 import com.sepage.franceterme.R;
+import com.sepage.franceterme.data.DataPool;
 import com.sepage.franceterme.view.fragments.DiscoverTermsFragment;
 import com.sepage.franceterme.view.fragments.InfoFragment;
 import com.sepage.franceterme.view.fragments.ProposeTermFragment;
@@ -28,6 +29,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mainActivity = this;
+
+        if (getIntent().getBooleanExtra(SplashScreen.DATA_IS_INITIALIZED,false)) {
+            DataPool.initializeAppData(this);
+        }
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -87,6 +92,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     public static void selectTab(int tabIndex) {
         mainActivity.mViewPager.setCurrentItem(tabIndex);
+    }
+
+
+    @Override
+    public void finalize() throws Throwable {
+        if (DataPool.getDatabaseHelper()!= null) {
+            DataPool.getDatabaseHelper().close();
+        }
     }
 
     /**

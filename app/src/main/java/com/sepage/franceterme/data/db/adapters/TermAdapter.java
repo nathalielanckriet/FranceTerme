@@ -9,6 +9,7 @@ package com.sepage.franceterme.data.db.adapters;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.sepage.franceterme.data.DataPool;
 import com.sepage.franceterme.data.db.DatabaseHelper;
 import com.sepage.franceterme.entities.Domain;
 import com.sepage.franceterme.entities.EquivalentTerm;
@@ -25,34 +26,34 @@ import java.util.Map;
 public class TermAdapter {
 
 
-    private final static int TermID = 0, TermTitle = 1, TermDefinition = 2, TermNotes = 3, DomainTitle = 4,
-            SubdomainTitle = 5, EquivalentTitle = 6, EquivalentLanguage = 7, EquivalentCategory = 8,
-            EquivalentNote = 9, RelatedTermTitle = 10, RelatedTermStatus = 11, RelatedTermCategory = 12,
-            RelatedTermID = 13, RelatedTermLanguage = 14, SeeAlsoTermID = 15, VariantTitle = 16,
-            VariantCategory = 17, VariantLanguage = 18, VariantType = 19;
-    private static DatabaseHelper database;
+    private final static int TermID = 0, TermTitle = 1, TermDefinition = 2, TermCategory = 3, TermLangage = 4,
+            TermNotes = 5, DomainTitle = 6, SubdomainTitle = 7, EquivalentTitle = 8 ,EquivalentLanguage = 9,
+            EquivalentCategory = 10, EquivalentNote = 11, RelatedTermTitle = 12, RelatedTermStatus = 13, RelatedTermCategory = 14,
+            RelatedTermID = 15, RelatedTermLanguage = 16, SeeAlsoTermID = 17, VariantTitle = 18,
+            VariantCategory = 19, VariantLanguage = 20, VariantType = 21;
 
     public static Term getTermFromDatabaseByID(Context context, String id) {
-
         Term term = new Term();
         Map domainHashMap = new HashMap<String, Domain>(), subdomainHashMap = new HashMap<String, Subdomain>(), variantTermHashMap = new HashMap<String, VariantTerm>(),
                 equivalentTermHashMap = new HashMap<String, EquivalentTerm>(), relatedTermHashMap = new HashMap<String, RelatedTerm>();
         HashSet<String> seeAlsoTerms = new HashSet<String>();
-        database = new DatabaseHelper(context);
-        Cursor results = database.findTermByID(id);
+        Cursor results = DataPool.getDatabaseHelper().findTermByID(id);
 
         /* ORDER OF RETURNED COLUMNS IN A SELECT QUERY FOR TERMS BY ID
-         * 0TermID	1TermTitle	2TermDefinition	3TermNotes	4DomainTitle	5SubdomainTitle	6EquivalentTitle	7EquivalentLanguage	8EquivalentCategory	9EquivalentNote	10RelatedTermTitle
-         * 11RelatedTermStatus	12RelatedTermCategory	13RelatedTermID	14RelatedTermLanguage	15SeeAlsoTermID	16VariantTitle	17VariantCategory	18VariantLanguage	19VariantType
+         * 0TermID	1TermTitle	2TermDefinition	3TermCategory  4TermLangage 5TermNotes	6DomainTitle	7SubdomainTitle	8EquivalentTitle	9EquivalentLanguage	10EquivalentCategory
+         * 11EquivalentNote	12RelatedTermTitle 13RelatedTermStatus	14RelatedTermCategory	15RelatedTermID	16RelatedTermLanguage	17SeeAlsoTermID	18VariantTitle	19VariantCategory
+         * 20VariantLanguage	21VariantType
          */
         for (int i = 0; i < results.getCount(); i++) { // For each row in the results
             results.moveToPosition(i);
 
             // Term
-            if (!term.getId().equals(results.getColumnName(TermID))) {   // so you don't add the
+            if (i == 0 || !term.getId().equals(results.getColumnName(TermID))) {   // so you don't add the same term multiple times
                 term.setId(results.getString(TermID));
                 term.setTitle(results.getString(TermTitle));
                 term.setDefinition(results.getString(TermDefinition));
+                term.setCategory(results.getString(TermCategory));
+                term.setLangage(results.getString(TermLangage));
                 term.setNotes(results.getString(TermNotes));
             }
 
@@ -126,10 +127,10 @@ public class TermAdapter {
         }
 
         // add see also terms
-        String[] ids = (String[]) seeAlsoTerms.toArray();
-        for (String seealsoId : ids) {
-            term.addSeeAlsoTerm(seealsoId);
+        for (Object seealsoId : seeAlsoTerms.toArray()) {
+            term.addSeeAlsoTerm((String) seealsoId);
         }
+        results.close();
         return term;
     }
 

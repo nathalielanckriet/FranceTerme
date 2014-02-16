@@ -11,7 +11,7 @@ import com.sepage.franceterme.data.db.util.SQLUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EquivalentTerm implements SQLHelper<EquivalentTerm> {
+public class EquivalentTerm implements SQLHelper{
 
 
     private String title;
@@ -71,7 +71,7 @@ public class EquivalentTerm implements SQLHelper<EquivalentTerm> {
         return false;
     }
 
-    @Override
+
     public boolean equals(EquivalentTerm object) {
         return title.equals(object.getTitle());
 

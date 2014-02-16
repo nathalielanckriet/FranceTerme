@@ -32,6 +32,7 @@ public class SQLAdapter {
             query.moveToNext();
             results.put(query.getString(ID_COLUMN), query.getString(TITLE_COLUMN));
         }
+        query.close();
         return results;
     }
 

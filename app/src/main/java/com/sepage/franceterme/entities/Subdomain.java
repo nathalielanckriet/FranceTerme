@@ -12,7 +12,7 @@ import com.sepage.franceterme.data.db.util.SQLUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Subdomain implements SQLHelper<Subdomain> {
+public class Subdomain implements SQLHelper {
 
     private String title;
     private String sqlid;
@@ -47,7 +47,7 @@ public class Subdomain implements SQLHelper<Subdomain> {
         return false;
     }
 
-    @Override
+
     public boolean equals(Subdomain object) {
         return title.equals(object.getTitle());
     }

@@ -13,7 +13,7 @@ import com.sepage.franceterme.data.xml.util.Util;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Term implements SQLHelper<Term> {
+public class Term implements SQLHelper {
 
     private String title;
     private String id;
@@ -158,7 +158,6 @@ public class Term implements SQLHelper<Term> {
         return false;
     }
 
-    @Override
     public boolean equals(Term object) {
         return title.equals(object.getTitle());
     }

@@ -12,7 +12,7 @@ import com.sepage.franceterme.data.db.util.SQLUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Domain implements SQLHelper<Domain> {
+public class Domain implements SQLHelper {
 
 
     private String title;
@@ -49,7 +49,7 @@ public class Domain implements SQLHelper<Domain> {
         return false;
     }
 
-    @Override
+
     public boolean equals(Domain object) {
         return title.equals(object.getTitle());
     }
