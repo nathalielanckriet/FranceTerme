@@ -117,9 +117,8 @@ public class SQLUtil implements SQLHelper {
         return "";
     }
 
-    public static String getSELECTQueryForTermById(String termId) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("SELECT T.id AS TermID, T.title AS TermTitle, T.definition AS TermDefinition, " +
+    public static String getSELECTQueryForTermById() {
+        return ("SELECT T.id AS TermID, T.title AS TermTitle, T.definition AS TermDefinition, " +
                 "T.notes AS TermNotes, D.title AS DomainTitle, S.title AS SubdomainTitle, E.title AS EquivalentTitle, " +
                 "E.language AS EquivalentLanguage, E.category AS EquivalentCategory, E.note AS EquivalentNote, " +
                 "R.title AS RelatedTermTitle, R.status AS RelatedTermStatus, R.category AS RelatedTermCategory, " +
@@ -136,11 +135,6 @@ public class SQLUtil implements SQLHelper {
                 "LEFT OUTER JOIN Equivalent AS E ON E.id = TE.equivalent_id " +
                 "LEFT OUTER JOIN Variant AS V ON V.id = TV.variant_id " +
                 "LEFT OUTER JOIN RelatedTerm AS R ON R.id = TR.relatedterm_id WHERE T.id =");
-        builder.append("\'");
-        builder.append(termId);
-        builder.append("\';");
-
-        return builder.toString();
     }
 
 

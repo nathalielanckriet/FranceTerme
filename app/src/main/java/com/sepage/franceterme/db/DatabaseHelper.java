@@ -46,7 +46,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 openDatabase();
             } catch (SQLException e) {
                 e.printStackTrace();
-                Log.d("Database", "FATAL ERROR: Could not open database. Ignoring for now. lol.");
+                Log.d("Database", "FATAL ERROR: Could not open database.");
+                database = db;
             }
         }
     }
@@ -62,10 +63,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     public boolean migrateDatabaseFromLocalFile() {
 
-        boolean dbExist = checkIfDatabaseExists();
-
-        if (dbExist) {
-            return true;
+        if (checkIfDatabaseExists()) {
+            return true;        // meh no need
         } else {
 
             //By calling this method and empty database will be created into the default system path
@@ -191,6 +190,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Cursor findTermByID(String id) {
-
+        return database.rawQuery(SQLUtil.getSELECTQueryForTermById(), new String[] {id});
     }
 }
