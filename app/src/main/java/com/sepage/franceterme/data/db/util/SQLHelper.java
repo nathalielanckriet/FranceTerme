@@ -3,10 +3,8 @@
  = @author: @danakianfar
  =============================================================================*/
 
-package com.sepage.franceterme.db.util;
+package com.sepage.franceterme.data.db.util;
 
-
-import java.util.List;
 
 public interface SQLHelper<T> {
 

@@ -3,13 +3,13 @@
  = @author: @danakianfar
  =============================================================================*/
 
-package com.sepage.franceterme.db.adapters;
+package com.sepage.franceterme.data.db.adapters;
 
 
 import android.content.Context;
 import android.database.Cursor;
 
-import com.sepage.franceterme.db.DatabaseHelper;
+import com.sepage.franceterme.data.db.DatabaseHelper;
 import com.sepage.franceterme.entities.Domain;
 import com.sepage.franceterme.entities.EquivalentTerm;
 import com.sepage.franceterme.entities.RelatedTerm;

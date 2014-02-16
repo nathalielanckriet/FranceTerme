@@ -1,4 +1,4 @@
-package com.sepage.franceterme.db;
+package com.sepage.franceterme.data.db;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.sepage.franceterme.db.util.SQLUtil;
+import com.sepage.franceterme.data.db.util.SQLUtil;
 
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
@@ -26,6 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private SQLiteDatabase database;
     private final Context context;
+    private boolean hasInitializedDatabase = false;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -34,15 +35,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.d("Database Intialization", "trying to use local file");
-        boolean successInUsingLocalDatabase = migrateDatabaseFromLocalFile(); // try to use local database file
-        if (!successInUsingLocalDatabase) {             // using local database file failed, will use insert scripts now
-            Log.d("Database Intialization", "COULD NOT USE LOCAL DATABASE FILE, NOW RUNNING BATCH INSERT SCRIPTS IN SEPARATE THREAD");
-            executeLargeQueryOnTransactionMode(db, SQLUtil.CREATE_ALLTABLES_SCRIPT);
-            initializeSQLTablesAndInsertAllOnSeparateThread(db, SQL_INSERT_SCRIPTS_LOCAL_PATH);
-            db.execSQL(SQLUtil.ANALYZE_DATABASE_SCRIPT);
-        }
+        Log.d("Database Initialization", "trying to use local file");
         database = db;
+        setupDatabase(); // try to use local database file
     }
 
     @Override
@@ -54,23 +49,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * Creates a empty database on the system and rewrites it with your own database.
      */
-    public boolean migrateDatabaseFromLocalFile() {
+    public boolean setupDatabase() {
 
-        if (checkIfDatabaseExists()) {
-            return true;        // meh no need
-        } else {
-
-            //By calling this method and empty database will be created into the default system path
-            //of your application so we are gonna be able to overwrite that database with our database.
-            this.getReadableDatabase();
-
-            try {
-                copyDatabaseFromLocalFileToSystem();
-            } catch (IOException e) {
-                Log.d("Database Initialization", "Could not copy local database file to system path");
-                return false;
-            }
+        if (checkIfDatabaseExists() && checkIfDatabaseHasData()) {    // check if database exists and is populated
             return true;
+        } else {            // create database and populate
+
+            this.getReadableDatabase();     // creates an empty database that we will later write over
+            try {
+                Log.d("Database Initialization", "Attempting to copy local database file to system");
+                copyDatabaseFromLocalFileToSystem();        // copy from local file
+            } catch (IOException e) {
+                Log.d("Database Initialization", "COULD NOT USE LOCAL DATABASE FILE, NOW RUNNING BATCH INSERT SCRIPTS IN SEPARATE THREAD");
+                executeLargeQueryOnTransactionMode(database, SQLUtil.CREATE_ALLTABLES_SCRIPT);      // create tables
+                initializeSQLTablesAndInsertAllOnSeparateThread(database, SQL_INSERT_SCRIPTS_LOCAL_PATH);   // insert all data (will take a while)
+                database.execSQL(SQLUtil.ANALYZE_DATABASE_SCRIPT);      // analyze
+            }
+            return checkIfDatabaseExists() && checkIfDatabaseHasData();
         }
     }
 
@@ -81,19 +76,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     private boolean checkIfDatabaseExists() {
 
-        SQLiteDatabase checkDB = null;
+        SQLiteDatabase database = null;
         try {
-            checkDB = SQLiteDatabase.openDatabase(FULL_DATABASE_PATH, null, SQLiteDatabase.OPEN_READONLY);
+            database = SQLiteDatabase.openDatabase(FULL_DATABASE_PATH, null, SQLiteDatabase.OPEN_READONLY); // important that it opens a second database connection
 
         } catch (SQLiteException e) {
             Log.d("Database Initialization", "SQL Database " + DATABASE_NAME + " doesn't exist yet. Will create.");
         }
 
-        if (checkDB != null) {
-            checkDB.close();
+        boolean exists = false;
+
+        if ((exists = (database != null))) {    // if database object is null, the database doesnt exist
+            database.close();
         }
 
-        return checkDB != null ? true : false;
+        return exists;
+    }
+
+    private boolean checkIfDatabaseHasData() {
+        boolean exists = false;
+
+        if ((exists = (database != null))) {    // if database object is null, the database doesnt exist
+            Cursor result = database.rawQuery("SELECT COUNT(_id) AS COUNT FROM TERM", null);      // check to see if anything exists in the Term table
+            exists = result.moveToFirst();
+            if (exists) {
+                exists = result.getInt(0) > 1;
+            }
+        }
+        // dont close database
+        return exists;
     }
 
     /**
@@ -140,7 +151,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void executeLargeQueryOnTransactionMode(SQLiteDatabase db, String largeQuery) {
         db.beginTransaction();
         try {
-            db.execSQL("PRAGMA foreign_keys = ON;");
             db.execSQL(largeQuery);
             db.setTransactionSuccessful();
         } catch (Exception e) {
@@ -169,7 +179,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     }
                     reader.close();
 
-                    Log.i("SQL BATCH INSERT", "Inserts completed successfully");
+                    Log.i("Database Initialization", "Database Inserts completed successfully");
 
 
                 } catch (IOException e) {
@@ -183,10 +193,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Cursor findTermByID(String id) {
-        return database.rawQuery(SQLUtil.getSELECTQueryForTermById(), new String[] {id});
+        return database.rawQuery(SQLUtil.getSELECTQueryForTermById(), new String[]{id});
     }
 
     public Cursor executeRawQuery(String query, String[] args) {
-        return database.rawQuery(query,args);
+        return database.rawQuery(query, args);
     }
 }

@@ -1,4 +1,4 @@
-package com.sepage.franceterme.xml.util;
+package com.sepage.franceterme.data.xml.util;
 
         import java.util.HashSet;
 

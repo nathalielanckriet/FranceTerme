@@ -3,15 +3,14 @@
  =- @author: @danakianfar
  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
-package com.sepage.franceterme.xml.saxadapter;
+package com.sepage.franceterme.data.xml.saxadapter;
 
 import android.util.Log;
 
 import com.google.common.base.CharMatcher;
 import com.google.common.collect.ArrayListMultimap;
 import com.sepage.franceterme.entities.*;
-import com.sepage.franceterme.xml.util.Util;
-import com.sepage.franceterme.xml.util.Values;
+import com.sepage.franceterme.data.xml.util.Values;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;

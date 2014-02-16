@@ -6,9 +6,9 @@
 package com.sepage.franceterme.entities;
 
 
-import com.sepage.franceterme.db.util.SQLHelper;
-import com.sepage.franceterme.db.util.SQLUtil;
-import com.sepage.franceterme.xml.util.Util;
+import com.sepage.franceterme.data.db.util.SQLHelper;
+import com.sepage.franceterme.data.db.util.SQLUtil;
+import com.sepage.franceterme.data.xml.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;

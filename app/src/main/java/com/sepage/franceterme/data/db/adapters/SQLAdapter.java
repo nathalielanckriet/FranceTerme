@@ -3,14 +3,16 @@
  = @author: @danakianfar
  =============================================================================*/
 
-package com.sepage.franceterme.db.adapters;
+package com.sepage.franceterme.data.db.adapters;
 
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
-import com.sepage.franceterme.db.DatabaseHelper;
-import com.sepage.franceterme.db.util.SQLUtil;
+import com.sepage.franceterme.data.DataPool;
+import com.sepage.franceterme.data.db.DatabaseHelper;
+import com.sepage.franceterme.data.db.util.SQLUtil;
 
 import java.util.HashMap;
 
@@ -19,14 +21,15 @@ public class SQLAdapter {
 
     private static DatabaseHelper database;
     private static final int ID_COLUMN=0, TITLE_COLUMN=1;
+
     public static HashMap<String, String> getAllIDsAndTitlesFromDatabase (Context context) {
-        database = new DatabaseHelper(context);
+        Log.d("SQL Cache", "Setting up id-title hashmap");
+        database = DataPool.getDatabaseHelper();
         Cursor query = database.executeRawQuery(SQLUtil.SELECT_IDS_TITLES, null);
         HashMap<String,String> results = new HashMap<String, String>();
 
         for(int i=0; i<query.getCount(); i++) {
             query.moveToNext();
-
             results.put(query.getString(ID_COLUMN), query.getString(TITLE_COLUMN));
         }
         return results;

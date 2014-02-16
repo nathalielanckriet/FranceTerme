@@ -3,11 +3,10 @@
  = @author: @danakianfar
  =============================================================================*/
 
-package com.sepage.franceterme.db.util;
+package com.sepage.franceterme.data.db.util;
 
 import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SQLUtil implements SQLHelper {
