@@ -132,9 +132,6 @@ public class DiscoverTermsFragment extends Fragment implements View.OnClickListe
         collapsedTerm.setOnClickListener(this);
 
         ViewUtil.addViewToParent((ViewGroup) view.findViewById(R.id.main_term_container), collapsedTerm, position);
-        if (!buttonsAreDisplayed) {
-
-        }
     }
 
 
@@ -153,7 +150,7 @@ public class DiscoverTermsFragment extends Fragment implements View.OnClickListe
         String langage = term.getLangage();
         String category = term.getCategory();
         ((TextView) expandedTerm.findViewById(R.id.term_expanded_type_langage))
-                .setText("" + (category != null ? ", " + category : "") + (langage != null ? ", " + langage : "")); //category and langage if any
+                .setText("" + (category != null ? category : "") + (langage != null ? ", " + langage : "")); //category and langage if any
 
 
         // Variants
@@ -288,6 +285,7 @@ public class DiscoverTermsFragment extends Fragment implements View.OnClickListe
                 Log.d("Click", "tap on collapsed term");
                 clearAllTerms();
                 ((ViewGroup)getActivity().findViewById(R.id.main_term_container)).addView(getActivity().getLayoutInflater().inflate(R.layout.term_notfound_buttons, null));
+                getActivity().findViewById(R.id.proposeterm_submit_button).setOnClickListener(this);
                 setMargins(getActivity().findViewById(R.id.discoverterms_search_autocomplete), 0, 0, 0, 0);
                 displayRequestedTermExpanded(currentTerm, 0);
                 break;
