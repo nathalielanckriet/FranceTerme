@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--============================================================================
+  = Copyright (c) Sepage SAS, $year.
+  = @author: @danakianfar
+  ===========================================================================-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/customActionBar">
+
+    <TextView
+        android:id="@+id/customActionBar_banner"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="FranceTerme"
+        style="@style/CustomActionBar.Banner" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/gray">
+
+        <ImageButton
+            android:id="@+id/customActionBar_button1_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:src="@drawable/ic_action_search"
+            style="@style/CustomActionBar.Buttons"
+            android:onClick="onClick" />
+
+        <ImageButton
+            android:id="@+id/customActionBar_button2_edit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:src="@drawable/ic_action_edit"
+            style="@style/CustomActionBar.Buttons"
+            android:onClick="onClick" />
+
+        <ImageButton
+            android:id="@+id/customActionBar_button3_about"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:src="@drawable/ic_action_about"
+            android:onClick="onClick"
+            style="@style/CustomActionBar.Buttons" />
+
+    </LinearLayout>
+
+</LinearLayout>

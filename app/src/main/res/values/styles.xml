@@ -3,6 +3,21 @@
 
 <resources>
 
+    <style name="Theme.Franceterme" parent="@style/Theme.AppCompat.Light">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="actionBarItemBackground">@drawable/selectable_background_franceterme</item>
+        <item name="popupMenuStyle">@style/PopupMenu.Franceterme</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Franceterme</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Franceterme</item>
+        <item name="actionDropDownStyle">@style/DropDownNav.Franceterme</item>
+        <item name="actionBarStyle">@style/ActionBar.Solid.Franceterme</item>
+        <item name="actionModeBackground">@drawable/cab_background_top_franceterme</item>
+        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_franceterme</item>
+        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Franceterme</item>
+    </style>
+
+
     <style name="tableRow_expandedTerm">
         <item name="android:textColor">@color/dark_gray</item>
         <item name="android:textStyle">bold</item>
@@ -16,5 +31,32 @@
     <style name="textSize_default">
         <item name="android:textSize">30sp</item>
     </style>
+
+    <style name="CustomActionBar">
+        <item name="android:imageButtonStyle">@style/CustomActionBar.Buttons</item>
+        <item name="android:textViewStyle">@style/CustomActionBar.Banner</item>
+    </style>
+
+    <style name="CustomActionBar.Buttons">
+        <item name="android:background">@drawable/tab_indicator_ab_franceterme</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:selectable">true</item>
+        <item name="android:drawableRight">@drawable/btn_cab_done_default_franceterme</item>
+    </style>
+
+
+
+    <style name="CustomActionBar.Banner">
+        <item name="android:background">@color/default_pink</item>
+        <item name="android:padding">3dp</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:gravity">right</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@android:color/white</item>
+
+    </style>
+
+
 
 </resources>

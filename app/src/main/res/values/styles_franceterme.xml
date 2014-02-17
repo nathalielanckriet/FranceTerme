@@ -3,20 +3,6 @@
 
 <resources>
 
-    <style name="Theme.Franceterme" parent="@style/Theme.AppCompat.Light">
-        <item name="actionBarItemBackground">@drawable/selectable_background_franceterme</item>
-        <item name="popupMenuStyle">@style/PopupMenu.Franceterme</item>
-        <item name="dropDownListViewStyle">@style/DropDownListView.Franceterme</item>
-        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Franceterme</item>
-        <item name="actionDropDownStyle">@style/DropDownNav.Franceterme</item>
-        <item name="actionBarStyle">@style/ActionBar.Solid.Franceterme</item>
-        <item name="actionModeBackground">@drawable/cab_background_top_franceterme</item>
-        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_franceterme</item>
-        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Franceterme</item>
-
-        
-    </style>
-
     <style name="ActionBar.Solid.Franceterme" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
         <item name="background">@drawable/ab_solid_franceterme</item>
         <item name="backgroundStacked">@drawable/ab_stacked_solid_franceterme</item>

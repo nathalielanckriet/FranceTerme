@@ -10,18 +10,24 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 
 import com.sepage.franceterme.R;
 import com.sepage.franceterme.data.DataPool;
 import com.sepage.franceterme.view.fragments.DiscoverTermsFragment;
 import com.sepage.franceterme.view.fragments.InfoFragment;
 import com.sepage.franceterme.view.fragments.ProposeTermFragment;
+import com.sepage.franceterme.view.util.ViewUtil;
 
-public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener, View.OnClickListener {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private static MainActivity mainActivity;
+    private ImageButton search_bttn1, edit_bttn2, about_bttn3;
     public static final int TAB_DISCOVER_INDEX = 0, TAB_SUGGEST_INDEX = 1, TAB_INFO_INDEX = 2;
 
     @Override
@@ -49,6 +55,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+//        RelativeLayout mainActivityLayout = (RelativeLayout) findViewById(R.id.mainActivityLayout);
+//        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+//        params.addRule(RelativeLayout.ALIGN_TOP, mViewPager.getId());
+//        mainActivityLayout.addView(getLayoutInflater().inflate(R.layout.custom_actionbar, mainActivityLayout, false),params);
+
+        //ViewUtil.addViewToParent(getLayoutInflater(), ViewUtil.getParent(mViewPager), R.layout.custom_actionbar);
+
         // When swiping between different sections, select the corresponding
         // tab. We can also use ActionBar.Tab#select() to do this if we have
         // a reference to the Tab.
@@ -59,12 +72,20 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             }
         });
 
+
+        search_bttn1 = (ImageButton) findViewById(R.id.customActionBar_button1_search);
+        edit_bttn2 = (ImageButton) findViewById(R.id.customActionBar_button2_edit);
+        about_bttn3 = (ImageButton) findViewById(R.id.customActionBar_button3_about);
+
         // Set up the action bar.
         // No icon
 
         actionBar.addTab(actionBar.newTab().setTabListener(this).setIcon(R.drawable.ic_action_search));
         actionBar.addTab(actionBar.newTab().setTabListener(this).setIcon(R.drawable.ic_action_edit));
         actionBar.addTab(actionBar.newTab().setTabListener(this).setIcon(R.drawable.ic_action_about));
+
+        actionBar.hide();
+        manageButtons(0);
     }
 
     @Override
@@ -79,6 +100,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // When the given tab is selected, switch to the corresponding page in
         // the ViewPager.
         mViewPager.setCurrentItem(tab.getPosition());
+        manageButtons(tab.getPosition());
     }
 
     @Override
@@ -91,6 +113,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
 
     public static void selectTab(int tabIndex) {
+        Log.d("Tab", "Chose tab: "+tabIndex);
         mainActivity.mViewPager.setCurrentItem(tabIndex);
     }
 
@@ -99,6 +122,46 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void finalize() throws Throwable {
         if (DataPool.getDatabaseHelper()!= null) {
             DataPool.getDatabaseHelper().close();
+        }
+    }
+
+    private void manageButtons(int selectedIndex) {
+        Log.d("Tab", "managing buttons: "+selectedIndex);
+        search_bttn1.setSelected(false);
+        edit_bttn2.setSelected(false);
+        about_bttn3.setSelected(false);
+        switch (selectedIndex) {
+            case 0: {
+                search_bttn1.setSelected(true);
+                break;
+            }
+            case 1: {
+                edit_bttn2.setSelected(true);
+                break;
+            }
+            case 2: {
+                about_bttn3.setSelected(true);
+                break;
+            }
+        }
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.customActionBar_button1_search: {
+                selectTab(0);
+                break;
+            }
+            case R.id.customActionBar_button2_edit: {
+                selectTab(1);
+                break;
+            }
+            case R.id.customActionBar_button3_about: {
+                selectTab(2);
+                break;
+            }
         }
     }
 
@@ -114,7 +177,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         @Override
         public Fragment getItem(int position) {
-
+            Log.d("Tab", "Chose tab: "+position);
             switch (position) {
                 case 0: {
                     return new DiscoverTermsFragment();
