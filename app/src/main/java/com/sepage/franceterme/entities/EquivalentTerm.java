@@ -35,23 +35,23 @@ public class EquivalentTerm implements SQLHelper{
     @Override
     public String getInsertQuery() {
         List<String> columns = new ArrayList<String>(), values = new ArrayList<String>();
-        if (title!=null) {
+        if (title!=null && !title.replaceAll("\\s","").isEmpty()) {
             columns.add(TITLE_COLUMN);
             values.add(title);
         }
-        if (language!= null) {
+        if (language!= null && !language.replaceAll("\\s","").isEmpty()) {
             columns.add(LANGUAGE_COLUMN);
             values.add(language);
         }
-        if (note!=null) {
+        if (note!=null && !note.replaceAll("\\s","").isEmpty()) {
             columns.add(NOTE_COLUMN);
             values.add(note);
         }
-        if (category != null) {
+        if (category != null && !category.replaceAll("\\s","").isEmpty()) {
             columns.add(CATEGORY_COLUMN);
             values.add(category);
         }
-        if (origin!= null) {
+        if (origin!= null && !origin.replaceAll("\\s","").isEmpty()) {
             columns.add(ORIGIN_COLUMN);
             values.add(origin);
         }

@@ -28,10 +28,10 @@ public class SQLUtil implements SQLHelper {
                             "CREATE TABLE TermVariant(_id INTEGER PRIMARY KEY,term_id INTEGER NOT NULL,variant_id INTEGER NOT NULL, FOREIGN KEY(term_id) REFERENCES Term (_id), FOREIGN KEY(variant_id) REFERENCES Variant(_id));" +
                             "CREATE TABLE TermEquivalent(_id INTEGER PRIMARY KEY,term_id INTEGER NOT NULL,equivalent_id INTEGER NOT NULL, FOREIGN KEY(term_id) REFERENCES Term (_id), FOREIGN KEY(equivalent_id ) REFERENCES Equivalent (_id));" +
                             "CREATE TABLE TermRelatedTerm(_id INTEGER PRIMARY KEY,term_id INTEGER NOT NULL,relatedterm_id INTEGER NOT NULL, FOREIGN KEY(term_id) REFERENCES Term (_id), FOREIGN KEY(relatedterm_id) REFERENCES RelatedTerm(_id));" +
-                            "CREATE TABLE Term (_id INTEGER NOT NULL, title TEXT NOT NULL, definition TEXT NOT NULL, notes TEXT, category TEXT, langage TEXT, PRIMARY KEY (_id));" +
+                            "CREATE TABLE Term (_id INTEGER NOT NULL, title TEXT NOT NULL, definition TEXT , notes TEXT, category TEXT, langage TEXT, PRIMARY KEY (_id));" +
                             "CREATE TABLE Domain (_id INTEGER PRIMARY KEY, title TEXT NOT NULL);" +
                             "CREATE TABLE Subdomain (_id INTEGER PRIMARY KEY, title TEXT NOT NULL);" +
-                            "CREATE TABLE Variant (_id INTEGER PRIMARY KEY, title TEXT NOT NULL, language TEXT, category TEXT, type text NOT NULL);" +
+                            "CREATE TABLE Variant (_id INTEGER PRIMARY KEY, title TEXT NOT NULL, language TEXT, category TEXT, type text);" +
                             "CREATE TABLE Equivalent (_id INTEGER PRIMARY KEY, title TEXT NOT NULL, language TEXT, note TEXT, category TEXT, origin TEXT);" +
                             "CREATE TABLE RelatedTerm(_id INTEGER PRIMARY KEY ,title TEXT NOT NULL, status TEXT, category TEXT, franceterme_id TEXT, langage TEXT);" +
                             "CREATE UNIQUE INDEX seealsoterm_index ON SeeAlsoTerm(term_id, seealso_id);" +
@@ -66,7 +66,7 @@ public class SQLUtil implements SQLHelper {
             "DROP INDEX IF EXISTS term_id_title_index;" +
             "DROP INDEX IF EXISTS similar_terms_index;" +
             "DROP TABLE IF EXISTS android_metadata;",
-             SELECT_TITLES_IDS = "SELECT _id, title FROM Term ORDER BY title ASC";
+             SELECT_ID_TITLE = "SELECT _id, title FROM Term ORDER BY title ASC";
 
 
     public static String getSQLInsertCommand(String tableName, List<String> columns, List<String> values) {

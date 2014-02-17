@@ -4,29 +4,41 @@
  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
 package com.sepage.franceterme.data.xml.saxadapter;
-
-import android.util.Log;
+/*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+ =- Copyright (c) 2014. Sépage SAS
+ =- @author: @danakianfar
+ =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
 import com.google.common.base.CharMatcher;
 import com.google.common.collect.ArrayListMultimap;
-import com.sepage.franceterme.entities.*;
+import com.sepage.franceterme.data.xml.util.Util;
 import com.sepage.franceterme.data.xml.util.Values;
+import com.sepage.franceterme.entities.Domain;
+import com.sepage.franceterme.entities.EquivalentTerm;
+import com.sepage.franceterme.entities.RelatedTerm;
+import com.sepage.franceterme.entities.Subdomain;
+import com.sepage.franceterme.entities.Term;
+import com.sepage.franceterme.entities.VariantTerm;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.xpath.XPathExpressionException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class SAXAdapter extends DefaultHandler implements Values {
 
     private static SAXParser sax;
-    private static String FRANCETERME_DATABASE_FILENAME="franceterme.xml";
     private static List<Term> terms;
     private ArrayListMultimap<String, String> xmlMap = ArrayListMultimap.create(40, 20);
     private StringBuilder HTMLbuffer = new StringBuilder();
@@ -62,6 +74,60 @@ public class SAXAdapter extends DefaultHandler implements Values {
         IGNORABLE_XML_TAGS.add(domaine_tag);
     }
 
+    public static void main (String[] args) {
+        StringBuilder builder = new StringBuilder();
+        List<Term> termList = new ArrayList<Term>();
+        try {
+            termList = parseXMLDatabase("franceterme.xml");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        int i = 0;
+        for (Term term : termList) {
+            log("\n/ " + ++ i + " ================================================================\n");
+            log(term.toString());
+            log("\n/ "+ " SQL Query ***************\n");
+            log(term.getInsertQuery());
+            builder.append(term.getInsertQuery()+"\n");
+        }
+
+        FileOutputStream outputStream = null;
+        File file;
+        String content = builder.toString();
+
+        try {
+
+            file = new File("final.sql.inserts.txt");
+            outputStream = new FileOutputStream(file);
+
+            // if file doesnt exists, then create it
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            // get the content in bytes
+            byte[] contentInBytes = content.getBytes();
+
+            outputStream.write(contentInBytes);
+            outputStream.flush();
+            outputStream.close();
+
+            System.out.println("Done");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
 
     private SAXAdapter () throws SAXException, ParserConfigurationException {
         super();
@@ -69,10 +135,10 @@ public class SAXAdapter extends DefaultHandler implements Values {
     }
 
 
-    public static List<Term> parseXMLDatabase () throws SAXException, IOException, XPathExpressionException, ParserConfigurationException {
-        terms = new ArrayList<Term>(6000);
+    public static List<Term> parseXMLDatabase (String xmlDatabaseName) throws SAXException, IOException, XPathExpressionException, ParserConfigurationException {
+        terms = new ArrayList<Term>();
         SAXAdapter handler = new SAXAdapter();
-        sax.parse(FRANCETERME_DATABASE_FILENAME, handler);
+        sax.parse(xmlDatabaseName, handler);
         return terms;
     }
 
@@ -83,16 +149,20 @@ public class SAXAdapter extends DefaultHandler implements Values {
 
         // If html tag, then add it to a cumulative value
         if (numberOfHTMLTagsOpen > 0) {
+            log("characters(): adding to htmlbuffer");
             HTMLbuffer.append(temp);
         }
         else {      // if its xml, add to xmlMap
+            log("characters(): adding to XML tag " + peekXMLTagFromStack());
             putToXMLMap(peekXMLTagFromStack(), temp);      // We don't store a trimmed value here because spaces matter
         }
     }
 
 
     private boolean closeHTMLTagAndCallBuffer (String tagName) {
-        HTMLbuffer.append("</" + tagName + ">");
+
+        //HTMLbuffer.append("</" + tagName + ">");          DONT REMOVE! ENABLE WHEN NECESSARY
+
         numberOfHTMLTagsOpen--;
         if (numberOfHTMLTagsOpen == 0) {      // data from the last open html tag has been read
             return true;
@@ -105,34 +175,43 @@ public class SAXAdapter extends DefaultHandler implements Values {
     }
 
     private String flushHTMLBuffer () {
+        //xmlMap.put(peekXMLTagFromStack(), HTMLbuffer.toString());
         String result = HTMLbuffer.toString();
+        log("HTMLBUFFER: " + result);
         HTMLbuffer = new StringBuilder();
         return result;
     }
 
 
     private void addHTMLTagAndAttributes (String tagName, Attributes attributes) {
+
         numberOfHTMLTagsOpen++;
         StringBuilder attributesAndValues = new StringBuilder();
         for (int i = 0; i < attributes.getLength(); i++) {
             attributesAndValues.append(" " + attributes.getQName(i) + "=\"" + attributes.getValue(i) + "\" ");
         }
-        HTMLbuffer.append("<" + tagName + attributesAndValues.toString() + ">");
+        //HTMLbuffer.append("<" + tagName + attributesAndValues.toString() + ">");          DONT REMOVE!!
+        log(" (MAYBE DEPENDING ON SETTINGS) ADDING HTML TAG AND ATTRIBUTES TO HTMLBUFFER: "+"<" + tagName + attributesAndValues.toString() + ">");
+
     }
 
 
     // Signals reading an opening tag
     @Override
     public void startElement (String uri, String localName, String tagName, Attributes attributes) {
+        log("<Opening tag: " + tagName + ">");
+
         if (HTML_TAGS_STATIC.contains(tagName)) {         // if its an html tag
             HTML_TAGS_STATIC.add(tagName);                // this list helps distinguish between HTML and XML tags
             addHTMLTagAndAttributes(tagName, attributes); // the openXMLTags list implements a stack-like behavior via methods in this class to help manage nested XML tags
+            log("HTML tag found: " + tagName + ". HTML tags in Stack: " + numberOfHTMLTagsOpen);
         }
         else {
             pushXMLTagToStack(tagName);  //adds tag name to the XMLTag stack
 
             if (tagName.equals(article_tag)) { //Article
-                currentTerm = new Term().setId(attributes.getValue(id_attr)); // sets id and categorie attribute
+                log("\n--- NEW ARTICLE -----------------------------------------------------");
+                currentTerm = new Term().setId(attributes.getValue(id_attr)); // sets id
             }
             else if (tagName.equals(terme_tag)) {
                 String status = attributes.getValue(statut_attr);
@@ -154,18 +233,21 @@ public class SAXAdapter extends DefaultHandler implements Values {
             }
             else if (tagName.equals(variante_tag)) {
                 if (equivalentTagOpen) {// Then its Equivalent=>Variante
+                    log("EQUIVALENT=>VARIANT detected");
                     currentEqui_VariantTerm = new EquivalentTerm().setLanguage(attributes.getValue(langage_attr))
                             .setOrigin(attributes.getValue(origine_attr)).setCategory(attributes.getValue(categorie_attr)); // sets language
                 }
                 else if (variantesTagOpen && !synonymTagOpen) { // its Terme=>Variantes=>Variant
+                    log("VARIANTES=>VARIANT detected");
                     currentVariantTerm = new VariantTerm().setLanguage(attributes.getValue(langage_attr))
                             .setCategory(attributes.getValue(categorie_attr)).setType(tempVariantesType); // sets langage + categorie + type
                 }
                 else if (synonymTagOpen) {      // its Terme (synonyme) =>Variantes=>Variant
+                    log("VARIANTES SYNONYM detected");
                     currentSynonymVariant = new RelatedTerm().setCategory(attributes.getValue(categorie_attr));
                 }
                 else {
-                    Log.d("XML SAX PARSING","!!!! UNKNOWN VARIANT TAG");
+                    log("!!!! UNKNOWN VARIANT TAG");
                 }
             }
             else if (tagName.equals(termerech_tag)) {
@@ -183,6 +265,9 @@ public class SAXAdapter extends DefaultHandler implements Values {
                 currentSeeAlsoTermID = attributes.getValue(href_attr);
                 currentTerm.addSeeAlsoTerm(currentSeeAlsoTermID.replaceAll(".*=", ""));
             }
+            else {
+                System.out.println("No attributes for: " + tagName);
+            }
         }
     }
 
@@ -190,15 +275,20 @@ public class SAXAdapter extends DefaultHandler implements Values {
     // signals reading the closing tag
     @Override
     public void endElement (String uri, String localName, String tagName) throws SAXException {
+        log("</Closing tag: " + tagName + ">");
         boolean doFlushHTMLBuffer;
         if (HTML_TAGS_STATIC.contains(tagName)) {           // if its an HTML tag then flush the buffer onto the read characters list
             doFlushHTMLBuffer = closeHTMLTagAndCallBuffer(tagName);
+            log("HTML tag: " + tagName);
             if (doFlushHTMLBuffer) {
                 String buffer = flushHTMLBuffer();
-                putToXMLMap(tagName, buffer);
+                putToXMLMap(openXMLTags.get(openXMLTags.size()-1), buffer);
+                log("Flushing HTMLbuffer to tag:" + tagName + ", buffer:" + buffer);
             }
         }
         else {      // if its not html
+
+            log("\nPEEK TO XML MAP - tag:" + tagName + "::" + Util.listToStringNoBreak(xmlMap.get(tagName)) + "\n");
 
             if (tagName.equals(article_tag)) { //Article
                 terms.add(currentTerm);
@@ -247,6 +337,7 @@ public class SAXAdapter extends DefaultHandler implements Values {
                     currentTerm.addVariantTerm(currentVariantTerm);
                 }
                 else if (synonymTagOpen) {
+                    log("HELLOO");
                     currentSynonymVariant.setTitle(popXMLTagValueFromMap(variante_tag));
                     currentTerm.addRelatedTerm(currentSynonymVariant);
                 }
@@ -267,7 +358,7 @@ public class SAXAdapter extends DefaultHandler implements Values {
                 currentEquivalentTerm.setNote(popXMLTagValueFromMap(note_tag));
             }
             else {
-                Log.d("XML SAX PARSING","SKIPPING TAG: " + tagName);
+                System.out.println("SKIPPING TAG: " + tagName);
             }
             popXMLTagFromStack(tagName);   // remove the last opened xml tag from stack
 
@@ -285,22 +376,22 @@ public class SAXAdapter extends DefaultHandler implements Values {
      * Provides a stack-like behavior for getting xml tags. This is necessary for situations where the xml structure contains nested (and possibly improperly formatted) xml tags.g
      */
     private void pushXMLTagToStack (String tagName) {
-        Log.d("XML SAX PARSING","adding tag:" + tagName + " to xmlStack");
+        log("adding tag:" + tagName + " to xmlStack");
         openXMLTags.add(tagName);
     }
 
 
     private String popXMLTagFromStack (String supposedPop) {
         String pop = (openXMLTags.remove(openXMLTags.size() - 1));
-        Log.d("XML SAX PARSING","Popping from XML stack, size:" + openXMLTags.size());
-        Log.d("XML SAX PARSING","Supposed pop:" + supposedPop + ", actual pop:" + pop);
+        log("Popping from XML stack, size:" + openXMLTags.size());
+        log("Supposed pop:" + supposedPop + ", actual pop:" + pop);
 
         return pop;
     }
 
 
     private String peekXMLTagFromStack () {
-        Log.d("XML SAX PARSING","Peeking at XML stack, size:" + openXMLTags.size());
+        log("Peeking at XML stack, size:" + openXMLTags.size() + "// peek: " + Util.listToStringNoBreak(openXMLTags));
         if (openXMLTags.size() > 0) {
             return openXMLTags.get(openXMLTags.size() - 1);
         }
@@ -316,13 +407,13 @@ public class SAXAdapter extends DefaultHandler implements Values {
 
 
     private String popXMLTagValueFromMap (String tagName) {
-        Log.d("SAX XML PARSING", "Getting XML tag:" + tagName + " from xmlmap and removing it.");
+        log("Getting XML tag:" + tagName + " from xmlmap and removing it.");
         List<String> values = xmlMap.removeAll(tagName);        // removes the key and all its entries (returns entries)
         String result = "";
         for (String temp : values) {
-            result += temp;
+            result += temp+" ";
         }
-        return result;
+        return result.trim();
     }
 
 
@@ -337,5 +428,9 @@ public class SAXAdapter extends DefaultHandler implements Values {
         System.out.println("End document");
     }
 
+
+    private static void log (String message) {
+        System.out.println(message);
+    }
 
 }

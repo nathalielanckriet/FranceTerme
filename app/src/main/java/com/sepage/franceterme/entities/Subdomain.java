@@ -27,7 +27,7 @@ public class Subdomain implements SQLHelper {
     @Override
     public String getInsertQuery() {
         List<String> columns = new ArrayList<String>(), values = new ArrayList<String>();
-        if (title!=null) {
+        if (title!=null && !title.replaceAll("\\s","").isEmpty()) {
             columns.add(TITLE_COLUMN);
             values.add(title);
         }

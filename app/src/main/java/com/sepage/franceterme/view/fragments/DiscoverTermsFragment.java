@@ -18,6 +18,7 @@ import com.sepage.franceterme.view.activities.MainActivity;
 import com.sepage.franceterme.view.util.ViewUtil;
 
 import java.util.Collection;
+import java.util.HashMap;
 
 
 public class DiscoverTermsFragment extends Fragment implements View.OnClickListener {
@@ -48,11 +49,23 @@ public class DiscoverTermsFragment extends Fragment implements View.OnClickListe
 
         searchAutocomplete = (AutoCompleteTextView) view.findViewById(R.id.discoverterms_search_autocomplete);
 
+        final HashMap<String,String> titleIDs = DataPool.getIDTitleHashMap();
+        searchAutocomplete.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         searchAutocomplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View arg1, int pos,
                                     long id) {
+                Log.d("Autocomplete", "autocomplete position clicked: "+pos+", is term: ");
                 ViewUtil.replaceView(inflater1, view.findViewById(R.id.term_du_moment_container), R.layout.search_term_collapsed_layout);
 
                 view.findViewById(R.id.search_term_collapsed_layout).setOnClickListener( new View.OnClickListener() {

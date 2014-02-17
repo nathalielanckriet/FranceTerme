@@ -59,27 +59,27 @@ public class Term implements SQLHelper {
 
         // For the Term table itself
         List<String> columns = new ArrayList<String>(), values = new ArrayList<String>();
-        if (title != null) {
+        if (title != null && !title.replaceAll("\\s","").isEmpty()) {
             columns.add(TITLE_COLUMN);
             values.add(title);
         }
-        if (id != null) {
+        if (id != null && !id.replaceAll("\\s","").isEmpty()) {
             columns.add(ID_COLUMN);
             values.add(id);
         }
-        if (definition != null) {
+        if (definition != null && !definition.replaceAll("\\s","").isEmpty()) {
             columns.add(DEFINITION_COLUMN);
             values.add(definition);
         }
-        if (notes != null) {
+        if (notes != null && !notes.replaceAll("\\s","").isEmpty()) {
             columns.add(NOTES_COLUMN);
             values.add(notes);
         }
-        if (category != null) {
+        if (category != null && !category.replaceAll("\\s","").isEmpty()) {
             columns.add(CATEGORY_COLUMN);
             values.add(category);
         }
-        if (langage != null) {
+        if (langage != null && !langage.replaceAll("\\s","").isEmpty()) {
             columns.add(LANGAGE_COLUMN);
             values.add(langage);
         }

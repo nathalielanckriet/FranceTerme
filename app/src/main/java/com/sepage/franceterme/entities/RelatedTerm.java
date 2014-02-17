@@ -22,23 +22,23 @@ public class RelatedTerm implements SQLHelper {
     @Override
     public String getInsertQuery() {
         List<String> columns = new ArrayList<String>(), values = new ArrayList<String>();
-        if (title != null ){
+        if (title != null  && !title.replaceAll("\\s","").isEmpty()) {
             columns.add(TITLE_COLUMN);
             values.add(title);
         }
-        if (franceterme_id != null ){
+        if (franceterme_id != null && !franceterme_id.replaceAll("\\s","").isEmpty()) {
             columns.add(FRANCETERMEID_COLUMN);
             values.add(franceterme_id);
         }
-        if (category != null) {
+        if (category != null && !category.replaceAll("\\s","").isEmpty()) {
             columns.add(CATEGORY_COLUMN);
             values.add(category);
         }
-        if (status != null) {
+        if (status != null && !status.replaceAll("\\s","").isEmpty()) {
             columns.add(STATUS_COLUMN);
             values.add(status);
         }
-        if (langage != null) {
+        if (langage != null && !langage.replaceAll("\\s","").isEmpty()) {
             columns.add(LANGAGE_COLUMN);
             values.add(langage);
         }

@@ -19,7 +19,7 @@ import java.util.Random;
 
 public class DataPool {
 
-    private static HashMap<String, String> idTitleCache;
+    private static HashMap<String, String> idTitleCache, titleIdCache;
     private static Term randomTerm;
     private static DatabaseHelper databaseHelper;
     private static Context context;
@@ -55,6 +55,13 @@ public class DataPool {
                 DataPool.setIdTitleCache(SQLAdapter.getIDsAndTitlesFromDatabase(finalContext));
             }
         }).run();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DataPool.setTitleIdCache(SQLAdapter.getTitlesAndIDsFromDatabase(finalContext));
+            }
+        }).run();
     }
 
     private static void setupRandomTerm() {
@@ -69,6 +76,10 @@ public class DataPool {
 
     public static void setIdTitleCache(HashMap<String, String> idTitleCache) {
         DataPool.idTitleCache = idTitleCache;
+    }
+
+    public static void setTitleIdCache(HashMap<String, String> titleIdCache) {
+        DataPool.titleIdCache = titleIdCache;
     }
 
     public static void setDatabaseHelper(DatabaseHelper helper) {

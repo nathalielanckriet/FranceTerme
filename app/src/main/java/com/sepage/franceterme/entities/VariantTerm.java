@@ -34,19 +34,19 @@ public class VariantTerm implements SQLHelper {
     @Override
     public String getInsertQuery() {
         List<String> columns = new ArrayList<String>(), values = new ArrayList<String>();
-        if (title != null) {
+        if (title!=null && !title.replaceAll("\\s","").isEmpty()) {
             columns.add(TITLE_COLUMN);
             values.add(title);
         }
-        if (category != null) {
+        if (category!=null && !category.replaceAll("\\s","").isEmpty()) {
             columns.add(CATEGORY_COLUMN);
             values.add(category);
         }
-        if (language != null) {
+        if (language !=null && !language.replaceAll("\\s","").isEmpty()) {
             columns.add(LANGUAGE_COLUMN);
             values.add(language);
         }
-        if (type != null) {
+        if (type !=null && !type.replaceAll("\\s","").isEmpty()) {
             columns.add(TYPE_COLUMN);
             values.add(type);
         }
