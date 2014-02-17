@@ -37,6 +37,7 @@ public class DiscoverTermsFragment extends Fragment implements View.OnClickListe
     private EditText searchBar;
     private AutoCompleteTextView searchAutocomplete;
     private Term currentTerm;
+    private boolean buttonsAreDisplayed = false;
 
     public DiscoverTermsFragment() {
     }
@@ -69,9 +70,8 @@ public class DiscoverTermsFragment extends Fragment implements View.OnClickListe
                 Log.d("Autocomplete selection", "Selected term: /" + selectedTerm + "/ from autocomplete");
                 String termID = titleIDs.get(selectedTerm);
                 currentTerm = TermAdapter.getTermFromDatabaseByID(getActivity(), termID);
-                ViewUtil.removeView((TextView) getActivity().findViewById(R.id.en_vedette_label));
+                clearAllTerms();
                 displayRequestedTermCollapsed(currentTerm, 0);
-
             }
         });
         return view;
@@ -132,6 +132,9 @@ public class DiscoverTermsFragment extends Fragment implements View.OnClickListe
         collapsedTerm.setOnClickListener(this);
 
         ViewUtil.addViewToParent((ViewGroup) view.findViewById(R.id.main_term_container), collapsedTerm, position);
+        if (!buttonsAreDisplayed) {
+
+        }
     }
 
 
@@ -231,10 +234,11 @@ public class DiscoverTermsFragment extends Fragment implements View.OnClickListe
         rows.add(temp);
         builder = new StringBuilder();
 
+        HashMap<String,String> idTitle = DataPool.getIDTitleHashMap();
         // See Also
         List<String> seeAlsoTerms = term.getSeeAlsoTermList();
         for (int i = 0; i < seeAlsoTerms.size(); i++) {
-            builder.append(seeAlsoTerms.get(i));
+            builder.append(idTitle.get(seeAlsoTerms.get(i)));
             if (i != seeAlsoTerms.size() - 1 && seeAlsoTerms.size() > 1) {
                 builder.append(", ");
             }
@@ -261,6 +265,10 @@ public class DiscoverTermsFragment extends Fragment implements View.OnClickListe
     }
 
 
+    private void clearAllTerms() {
+        ViewUtil.removeAllChildren((ViewGroup) getActivity().findViewById(R.id.main_term_container));
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -278,21 +286,17 @@ public class DiscoverTermsFragment extends Fragment implements View.OnClickListe
         switch (v.getId()) {
             case R.id.term_display_collapsed: {
                 Log.d("Click", "tap on collapsed term");
-                ViewUtil.removeAllChildren((ViewGroup) getActivity().findViewById(R.id.main_term_container));
+                clearAllTerms();
+                ((ViewGroup)getActivity().findViewById(R.id.main_term_container)).addView(getActivity().getLayoutInflater().inflate(R.layout.term_notfound_buttons, null));
                 setMargins(getActivity().findViewById(R.id.discoverterms_search_autocomplete), 0, 0, 0, 0);
                 displayRequestedTermExpanded(currentTerm, 0);
-
-                ViewUtil.addViewToParent(getActivity().getLayoutInflater(), (ViewGroup) getActivity().findViewById(R.id.discover_terms_layout), R.layout.term_notfound_buttons, ((ViewGroup) getActivity().findViewById(R.id.discover_terms_layout)).getChildCount()-1);
-                getActivity().findViewById(R.id.discover_suggestterm_button).setOnClickListener(this);
                 break;
             }
             case R.id.term_display_expanded: {
                 Log.d("Click", "tap on expanded term");
-                ViewUtil.removeAllChildren((ViewGroup) getActivity().findViewById(R.id.main_term_container));
+                clearAllTerms();
                 setMargins(getActivity().findViewById(R.id.discoverterms_search_autocomplete), 0, 90, 0, 0);
                 displayRequestedTermCollapsed(currentTerm, 0);
-                ViewUtil.addViewToParent(getActivity().getLayoutInflater(), (ViewGroup) getActivity().findViewById(R.id.discover_terms_layout), R.layout.term_notfound_buttons, ((ViewGroup) getActivity().findViewById(R.id.discover_terms_layout)).getChildCount()-1);
-                getActivity().findViewById(R.id.discover_suggestterm_button).setOnClickListener(this);
                 break;
             }
             case R.id.term_display_expanded_table: {
