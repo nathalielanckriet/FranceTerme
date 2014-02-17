@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:paddingLeft="50dp"
     android:paddingRight="50dp"
-    android:layout_marginTop="30dp"
+    android:paddingTop="40dp"
+    android:paddingBottom="40dp"
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:background="@android:color/white">

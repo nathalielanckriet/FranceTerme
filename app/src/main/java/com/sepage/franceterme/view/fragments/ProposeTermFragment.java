@@ -5,12 +5,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.sepage.franceterme.R;
 
-/**
- * Created by Balrog on 1/10/14.
- */
+
 public class ProposeTermFragment extends Fragment implements View.OnClickListener {
 
     View view;
@@ -38,6 +38,10 @@ public class ProposeTermFragment extends Fragment implements View.OnClickListene
         switch (v.getId()) {
             case R.id.proposeterm_submit_button: {
                 new SubmittalDialogFragment().show(getFragmentManager(), "");
+                ((EditText) getActivity().findViewById(R.id.suggest_terme_textfield_commentaire)).setText("");
+                ((EditText) getActivity().findViewById(R.id.suggest_terme_textfield_courriel)).setText("");
+                ((EditText) getActivity().findViewById(R.id.suggest_terme_textfield_domaine)).setText("");
+                ((EditText) getActivity().findViewById(R.id.suggest_terme_textfield_terme)).setText("");
             }
         }
     }

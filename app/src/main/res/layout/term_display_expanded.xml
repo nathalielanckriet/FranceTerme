@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/term_display_expanded"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        style="@style/term_expanded_container"
+        android:padding="10dp">
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_action_share"
+            android:background="@android:color/transparent"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true" />
+
+        <LinearLayout
+            android:id="@+id/term_title_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentTop="true">
+
+            <TextView
+                android:id="@+id/term_expanded_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/default_pink"
+                android:textStyle="bold"
+                android:text="Sample Term"
+                style="@style/Term_Title" />
+
+            <TextView
+                android:id="@+id/term_expanded_type_langage"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text=""
+                style="@style/Term_Title" />
+
+        </LinearLayout>
+
+        <TableLayout
+            android:id="@+id/term_display_expanded_table"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@id/term_title_container"
+            android:stretchColumns="1"
+            android:shrinkColumns="1">
+
+
+        </TableLayout>
+
+
+    </RelativeLayout>
+</ScrollView>

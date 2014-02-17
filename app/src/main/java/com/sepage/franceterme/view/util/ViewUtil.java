@@ -1,8 +1,5 @@
 package com.sepage.franceterme.view.util;
 
-/**
- * Created by Balrog on 1/14/14.
- */
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,5 +38,18 @@ public class ViewUtil {
 
     public static void addViewToParent(LayoutInflater inflater, ViewGroup parent, int viewToAdd, int index) {
         parent.addView(inflater.inflate(viewToAdd, parent, false), index);
+    }
+
+    public static void addViewToParent(ViewGroup parent, View viewToAdd) {
+        addViewToParent(parent, viewToAdd, 0);
+    }
+
+
+    public static void addViewToParent(ViewGroup parent, View viewToAdd, int index) {
+        parent.addView(viewToAdd, index);
+    }
+
+    public static void removeAllChildren(ViewGroup parent) {
+        parent.removeAllViews();
     }
 }

@@ -1,20 +1,14 @@
-
-
 <ScrollView
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/discover_terms_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:layout_width="0px"
-            android:layout_height="0px" />
 
         <AutoCompleteTextView
             android:id="@+id/discoverterms_search_autocomplete"
@@ -25,30 +19,34 @@
             android:paddingRight="@dimen/discoverterm_searchbar_padding_sides"
             android:paddingLeft="@dimen/discoverterm_searchbar_padding_sides"
             android:drawableRight="@drawable/ic_action_search"
-            android:layout_marginBottom="@dimen/discoverterm_searchbar_margin_bottom"
             android:layout_marginTop="@dimen/discoverterm_searchbar_margin_top"
             android:completionThreshold="1"
             android:inputType="textAutoComplete" />
 
 
         <LinearLayout
-            android:id="@+id/term_du_moment_container"
+            android:id="@+id/main_term_container"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="20dp">
+            android:layout_height="fill_parent">
 
-            <TextView
-                android:id="@+id/discover_termdumoment_textview"
+            <LinearLayout
+                android:id="@+id/collapsedTermContainer"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="23sp"
-                android:text="EN VEDETTE"
-                android:gravity="center"
-                android:layout_marginBottom="30dp" />
+                android:layout_height="match_parent">
 
+                <TextView
+                    android:id="@+id/en_vedette_label"
+                    android:paddingTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="23sp"
+                    android:text="EN VEDETTE"
+                    android:gravity="center"
+                    android:paddingBottom="20dp" />
 
-            <include layout="@layout/ecotaxe_term_collapsed_layout" />
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>

@@ -74,6 +74,10 @@ public class DataPool {
         return idTitleCache;
     }
 
+    public static HashMap<String, String> getTitleIDHashMap() {
+        return titleIdCache;
+    }
+
     public static void setIdTitleCache(HashMap<String, String> idTitleCache) {
         DataPool.idTitleCache = idTitleCache;
     }

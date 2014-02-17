@@ -37,7 +37,7 @@ public class SQLAdapter {
     }
 
     public static HashMap<String, String> getTitlesAndIDsFromDatabase(Context context) {
-        Log.d("SQL Cache", "Setting up id-title hashmap");
+        Log.d("SQL Cache", "Setting up title-id hashmap");
         database = DataPool.getDatabaseHelper();
         Cursor query = database.executeRawQuery(SQLUtil.SELECT_ID_TITLE, null);
         HashMap<String,String> results = new HashMap<String, String>(6000);
@@ -46,6 +46,7 @@ public class SQLAdapter {
             query.moveToNext();
             results.put(query.getString(TITLE_COLUMN),query.getString(ID_COLUMN));
         }
+        Log.d("SQL Cache", "Setting up title-id hashmap. Test: bec à fente(3282):"+results.get("bec à fente"));
         query.close();
         return results;
     }

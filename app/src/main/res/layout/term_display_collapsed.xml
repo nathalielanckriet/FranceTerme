@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/term_display_collapsed"
+    android:clickable="true"
+    style="@style/term_expanded_container"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/term_title_collapsed"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/default_pink"
+            android:textStyle="bold"
+            android:text="Sample Term"
+            style="@style/Term_Title" />
+
+        <TextView
+            android:id="@+id/term_type_langage_collapsed"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text=""
+            android:layout_gravity="center_vertical"
+            style="@style/Term_Title" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp">
+
+        <TextView
+            android:id="@+id/term_domains_subdomains_collapsed"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/dark_gray"
+            android:text=""
+            style="@style/Term_Data" />
+
+        <TextView
+            android:id="@+id/term_definition_short_collapsed"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            style="@style/Term_Data"
+            android:textSize="22sp"/>
+
+        <TextView
+            android:id="@+id/term_equivalents_collapsed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            style="@style/Term_Data"
+            android:textStyle="italic" />
+
+    </LinearLayout>
+</LinearLayout>

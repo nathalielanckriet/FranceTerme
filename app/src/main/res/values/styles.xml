@@ -18,14 +18,8 @@
     </style>
 
 
-    <style name="tableRow_expandedTerm">
-        <item name="android:textColor">@color/dark_gray</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:paddingRight">5dp</item>
-    </style>
-
-    <style name="layoutTextSize">
-        <item name="android:textViewStyle">@style/textSize_default</item>
+    <style name="term_expanded_container">
+        <item name="android:background">@color/light_gray</item>
     </style>
 
     <style name="textSize_default">
@@ -46,7 +40,6 @@
     </style>
 
 
-
     <style name="CustomActionBar.Banner">
         <item name="android:background">@color/default_pink</item>
         <item name="android:padding">3dp</item>
@@ -54,9 +47,40 @@
         <item name="android:gravity">right</item>
         <item name="android:textStyle">italic</item>
         <item name="android:textColor">@android:color/white</item>
+    </style>
 
+    <style name="Term_Title" >
+        <item name="android:textSize">@dimen/term_title_textsize</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:paddingTop">3dp</item>
     </style>
 
 
+    <style name="Term_Data" >
+        <item name="android:textSize">@dimen/term_data_textsize</item>
+        <item name="android:paddingBottom">1dp</item>
+        <item name="android:paddingTop">1dp</item>
+    </style>
+
+    <style name="Term_DetailsDisplay_LabelColumn">
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:textColor">@color/dark_gray</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:paddingRight">2dp</item>
+        <item name="android:minWidth">@dimen/term_detailsdisplay_labelcolumn_minwidth</item>
+        <item name="android:maxWidth">@dimen/term_detailsdisplay_labelcolumn_maxwidth</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">@integer/term_display_table_label_weight</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="Term_DetailsDisplay_DataColumn">
+        <item name="android:textSize">@dimen/term_title_textsize</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">@integer/term_display_table_data_weight</item>
+        <item name="android:paddingLeft">8dp</item>
+    </style>
 
 </resources>

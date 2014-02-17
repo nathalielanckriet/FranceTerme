@@ -229,6 +229,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Cursor findTermByID(String id) {
+        Log.d("SQL Query", "Running query for termid:"+id);
         return database.rawQuery(SQLUtil.getSELECTQueryForTermById(), new String[]{id});
     }
 

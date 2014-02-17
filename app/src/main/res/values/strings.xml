@@ -11,7 +11,7 @@
     <string name="splash_text">"Bienvenue sur l’application FranceTerme. Retrouvez les termes scientifiques et techniques publiés au Journal officiel."</string>
     <string name="suggest_a_term">PROPOSER UN TERME</string>
     <string name="update_database">"Mettre à jour l’application (FranceTerme)"</string>
-    <string name="didnt_find_string">"vous n'avez pas trouvé?"</string>
+    <string name="didnt_find_string">"Vous n'avez pas trouvé?"</string>
     <string name="info_page_text">
          <![CDATA["Cette application donne accès aux termes recommandés par la Commission générale de terminologie et de néologie, publiés au Journal officiel de la République française.<br />
 Cet ensemble de termes de différents domaines scientifiques et techniques est regroupé dans la base <a href="http://www.culture.fr/Ressources/FranceTerme" target="_blank">FranceTerme</a>. Cette base <span style="font-weight:bold;">ne constitue en aucun cas un dictionnaire de langue générale.</span><br />

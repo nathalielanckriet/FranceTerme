@@ -2,6 +2,7 @@
 
 <resources>
     <color name="default_pink">#EA80A4</color>
-    <color name="gray">#ffe0e0e0</color>
+    <color name="gray">#ffd1d1d1</color>
     <color name="dark_gray">#69696C</color>
+    <color name="light_gray">#fff1f1f4</color>
 </resources>
