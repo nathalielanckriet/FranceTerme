@@ -16,17 +16,17 @@ import com.sepage.franceterme.data.db.util.SQLUtil;
 
 import java.util.HashMap;
 
-// functions of this class: get HashMap<id,title> of all terms
+// functions of this class: get HashMap<title,id> of all terms
 public class SQLAdapter {
 
     private static DatabaseHelper database;
     private static final int ID_COLUMN=0, TITLE_COLUMN=1;
 
-    public static HashMap<String, String> getAllIDsAndTitlesFromDatabase (Context context) {
+    public static HashMap<String, String> getIDsAndTitlesFromDatabase(Context context) {
         Log.d("SQL Cache", "Setting up id-title hashmap");
         database = DataPool.getDatabaseHelper();
-        Cursor query = database.executeRawQuery(SQLUtil.SELECT_IDS_TITLES, null);
-        HashMap<String,String> results = new HashMap<String, String>();
+        Cursor query = database.executeRawQuery(SQLUtil.SELECT_TITLES_IDS, null);
+        HashMap<String,String> results = new HashMap<String, String>(6000);
 
         for(int i=0; i<query.getCount(); i++) {
             query.moveToNext();

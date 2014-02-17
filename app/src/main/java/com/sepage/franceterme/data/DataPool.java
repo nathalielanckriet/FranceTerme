@@ -52,18 +52,18 @@ public class DataPool {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                DataPool.setIdTitleCache(SQLAdapter.getAllIDsAndTitlesFromDatabase(finalContext));
+                DataPool.setIdTitleCache(SQLAdapter.getIDsAndTitlesFromDatabase(finalContext));
             }
         }).run();
     }
 
     private static void setupRandomTerm() {
-        int randomIndex = new Random().nextInt(DataPool.getIdTitleCache().size());
+        int randomIndex = new Random().nextInt(DataPool.getIDTitleHashMap().size());
         DataPool.setRandomTerm(TermAdapter.getTermFromDatabaseByID(context, Integer.toString(randomIndex)));
     }
 
 
-    public static HashMap<String, String> getIdTitleCache() {
+    public static HashMap<String, String> getIDTitleHashMap() {
         return idTitleCache;
     }
 

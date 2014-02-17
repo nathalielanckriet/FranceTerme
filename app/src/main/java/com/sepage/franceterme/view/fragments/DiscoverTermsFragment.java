@@ -2,6 +2,7 @@ package com.sepage.franceterme.view.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +13,18 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.sepage.franceterme.R;
+import com.sepage.franceterme.data.DataPool;
 import com.sepage.franceterme.view.activities.MainActivity;
 import com.sepage.franceterme.view.util.ViewUtil;
+
+import java.util.Collection;
 
 
 public class DiscoverTermsFragment extends Fragment implements View.OnClickListener {
 
     private View view, termsParentView;
     private EditText searchBar;
+    private AutoCompleteTextView searchAutocomplete;
 
     public DiscoverTermsFragment() {
     }
@@ -41,9 +46,8 @@ public class DiscoverTermsFragment extends Fragment implements View.OnClickListe
         View collapsedTerm = view.findViewById(R.id.discover_collapsed_term);
         collapsedTerm.setOnClickListener(this);
 
-        AutoCompleteTextView searchAutocomplete = (AutoCompleteTextView) view.findViewById(R.id.discoverterms_search_autocomplete);
-        String[] countries = {"centrale inertielle"};
-        searchAutocomplete.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, countries));
+        searchAutocomplete = (AutoCompleteTextView) view.findViewById(R.id.discoverterms_search_autocomplete);
+
 
         searchAutocomplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -69,6 +73,18 @@ public class DiscoverTermsFragment extends Fragment implements View.OnClickListe
             }
         });
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d("Autocomplete", "Loading "+DataPool.getIDTitleHashMap().size()+" entries to autocomplete");
+        Object[] temp = DataPool.getIDTitleHashMap().values().toArray();
+        String[] data = new String[temp.length];
+        for (int i=0; i<temp.length; i++) {
+            data[i] = (String) temp[i];
+        }
+        searchAutocomplete.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, data));
     }
 
     private void setOnClick(View v) {

@@ -2,6 +2,7 @@ package com.sepage.franceterme.view.activities;
 
 import java.util.Locale;
 
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.sepage.franceterme.R;
 import com.sepage.franceterme.data.DataPool;
@@ -36,7 +38,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         setContentView(R.layout.activity_main);
         mainActivity = this;
 
-        if (getIntent().getBooleanExtra(SplashScreen.DATA_IS_INITIALIZED,false)) {
+        if (!getIntent().getBooleanExtra(SplashScreen.DATA_IS_INITIALIZED,false)) {     // if data hasnt been setup, do it now.
             DataPool.initializeAppData(this);
         }
 
@@ -55,16 +57,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-//        RelativeLayout mainActivityLayout = (RelativeLayout) findViewById(R.id.mainActivityLayout);
-//        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-//        params.addRule(RelativeLayout.ALIGN_TOP, mViewPager.getId());
-//        mainActivityLayout.addView(getLayoutInflater().inflate(R.layout.custom_actionbar, mainActivityLayout, false),params);
+        ((TextView) findViewById(R.id.customActionBar_banner)).setTypeface(Typeface.createFromAsset(getAssets(),
+                "fonts/Roboto-LightItalic.ttf"));
 
-        //ViewUtil.addViewToParent(getLayoutInflater(), ViewUtil.getParent(mViewPager), R.layout.custom_actionbar);
-
-        // When swiping between different sections, select the corresponding
-        // tab. We can also use ActionBar.Tab#select() to do this if we have
-        // a reference to the Tab.
+        // for swiping
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {

@@ -66,7 +66,7 @@ public class SQLUtil implements SQLHelper {
             "DROP INDEX IF EXISTS term_id_title_index;" +
             "DROP INDEX IF EXISTS similar_terms_index;" +
             "DROP TABLE IF EXISTS android_metadata;",
-             SELECT_IDS_TITLES = "SELECT _id, title FROM Term ORDER BY _id ASC";
+             SELECT_TITLES_IDS = "SELECT _id, title FROM Term ORDER BY title ASC";
 
 
     public static String getSQLInsertCommand(String tableName, List<String> columns, List<String> values) {
